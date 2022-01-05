@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="239.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.qlnhahang.FThemThucAnController">
+   <children>
+      <VBox layoutX="24.0" layoutY="14.0" prefHeight="162.0" prefWidth="100.0" spacing="21.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã món:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên món:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Loại:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị tính" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá:" />
+         </children>
+      </VBox>
+      <VBox layoutX="136.0" layoutY="11.0" prefHeight="200.0" prefWidth="210.0" spacing="13.0">
+         <children>
+            <TextField />
+            <TextField />
+            <ComboBox prefHeight="26.0" prefWidth="212.0" />
+            <ComboBox prefHeight="26.0" prefWidth="210.0" />
+            <TextField />
+         </children>
+      </VBox>
+      <Button layoutX="287.0" layoutY="198.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="Thêm" />
+   </children>
+</AnchorPane>

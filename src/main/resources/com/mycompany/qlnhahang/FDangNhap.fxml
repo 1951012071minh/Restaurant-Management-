@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="294.0" prefWidth="384.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="com.mycompany.qlnhahang.FDangNhapController">
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label contentDisplay="CENTER" layoutX="114.0" layoutY="22.0" styleClass="Title" text="ĐĂNG NHẬP" textFill="#e80505">
+         <font>
+            <Font name="Microsoft Sans Serif" size="25.0" />
+         </font>
+      </Label>
+      <VBox layoutX="30.0" layoutY="86.0" prefHeight="100.0" prefWidth="130.0" spacing="25.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="136.0" text="Quyền truy cập">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Tài khoản">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Mật khẩu">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="189.0" layoutY="72.0" prefHeight="130.0" prefWidth="180.0" spacing="10.0">
+         <children>
+            <ComboBox id="cb_QuyenTruyCap" prefHeight="35.0" prefWidth="374.0" promptText="Quyền truy cập" />
+            <TextField id="txt_Username" prefHeight="35.0" />
+            <TextField id="txt_matKhau" prefHeight="35.0" promptText="Mật khẩu tối thiểu 6 kí tự có cả chữ và số" />
+         </children>
+      </VBox>
+      <Button id="btnDangKy" layoutX="211.0" layoutY="222.0" minHeight="30.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="161.0" text="Đăng Ký" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button id="btn_DangNhap" layoutX="27.0" layoutY="222.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="161.0" text="Đăng Nhập" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
+</AnchorPane>

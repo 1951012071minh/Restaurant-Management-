@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.qlnhahang.FDoiMKController">
+   <children>
+      <VBox layoutX="41.0" layoutY="100.0" prefHeight="200.0" prefWidth="162.0" spacing="35.0">
+         <children>
+            <Label text="Tài khoản :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Xác nhận mật khẩu :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Mật khẩu :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="8.0" prefHeight="50.0" prefWidth="603.0" text="Đổi Mật Khẩu" textAlignment="CENTER">
+         <font>
+            <Font name="Microsoft Sans Serif" size="26.0" />
+         </font>
+      </Label>
+      <VBox layoutX="221.0" layoutY="100.0" prefHeight="170.0" prefWidth="314.0" spacing="35.0">
+         <children>
+            <TextField />
+            <TextField />
+            <TextField />
+         </children></VBox>
+      <Button id="btn_Dong" layoutX="185.0" layoutY="271.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="161.0" text="Đóng" />
+      <Button id="btn_DangKy" layoutX="378.0" layoutY="271.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="161.0" text="Đăng Ký" />
+      <Label layoutX="459.0" layoutY="357.0" text="Hotline: 099898989">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
