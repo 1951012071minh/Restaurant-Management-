@@ -22,7 +22,19 @@ public class KhachHang {
 
     public KhachHang() {
     }
-
+    public String ToString()
+    {
+        return this.MaKH +this.TenKH +this.CMND +this.DiaChi +this.GioiTinh + this.MaAcc + this.SDT; 
+    }
+    public KhachHang(int maKH, String TenKH, String CMND, String DiaChi, String GioiTinh, int MaAcc, String SDT) {
+        this.MaKH = maKH;
+        this.TenKH = TenKH;
+        this.CMND = CMND;
+        this.DiaChi = DiaChi;
+        this.GioiTinh = GioiTinh;
+        this.MaAcc = MaAcc;
+        this.SDT = SDT;
+    }
     /**
      * @return the MaKH
      */

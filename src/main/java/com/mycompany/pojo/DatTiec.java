@@ -20,9 +20,9 @@ public class DatTiec {
     private int maKH;
     private Date ngayDat;
     private Date ngayToChuc;
-    private int noLuongBan;
+    private int soLuongBan;
     private int soLuongKhach;
-    private int buoi;
+    private String buoi;
     public DatTiec(){
         
     }
@@ -112,17 +112,17 @@ public class DatTiec {
     }
 
     /**
-     * @return the noLuongBan
+     * @return the soLuongBan
      */
-    public int getNoLuongBan() {
-        return noLuongBan;
+    public int getSoLuongBan() {
+        return soLuongBan;
     }
 
     /**
-     * @param noLuongBan the noLuongBan to set
+     * @param noLuongBan the soLuongBan to set
      */
-    public void setNoLuongBan(int noLuongBan) {
-        this.noLuongBan = noLuongBan;
+    public void setSoLuongBan(int noLuongBan) {
+        this.soLuongBan = noLuongBan;
     }
 
     /**
@@ -142,14 +142,14 @@ public class DatTiec {
     /**
      * @return the buoi
      */
-    public int getBuoi() {
+    public String getBuoi() {
         return buoi;
     }
 
     /**
      * @param buoi the buoi to set
      */
-    public void setBuoi(int buoi) {
+    public void setBuoi(String buoi) {
         this.buoi = buoi;
     }
 }
