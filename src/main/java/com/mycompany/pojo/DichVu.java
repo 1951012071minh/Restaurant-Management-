@@ -6,6 +6,7 @@
 package com.mycompany.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -56,4 +57,19 @@ public class DichVu {
     private int maDV;
     private String tenDV;
     private BigDecimal donGia;
+    private Date isDeleted;
+
+    /**
+     * @return the isDeleted
+     */
+    public Date getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setIsDeleted(Date isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }

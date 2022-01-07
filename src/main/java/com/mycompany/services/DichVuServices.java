@@ -23,9 +23,9 @@ public class DichVuServices {
     {
         List<DichVu> DichVus = new ArrayList<>();
         try(Connection conn = JdbcUtils.getConn()){
-            String sql = "SELECT * FROM dichvu";
+            String sql = "SELECT * FROM dichvu WHERE isnull(isDeleted)";
             if(kw != null && !kw.isEmpty())
-                sql +=  " WHERE MaDV like concat('%', ?, '%') OR TenDV like concat('%', ?, '%') ";
+                sql +=  " AND (MaDV like concat('%', ?, '%') OR TenDV like concat('%', ?, '%')) ";
             PreparedStatement stm = conn.prepareStatement(sql);
             if(kw != null && !kw.isEmpty())
             {
