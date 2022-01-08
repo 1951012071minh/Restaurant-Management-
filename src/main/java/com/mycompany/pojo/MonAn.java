@@ -6,6 +6,7 @@
 package com.mycompany.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -17,7 +18,7 @@ public class MonAn {
     private BigDecimal donGia;
     private String loai;
     private String donViTinh;
-    
+    private Date isDeleted;
     /**
      * @return the maMA
      */
@@ -86,6 +87,20 @@ public class MonAn {
      */
     public void setDonViTinh(String donViTinh) {
         this.donViTinh = donViTinh;
+    }
+
+    /**
+     * @return the isDeleted
+     */
+    public Date getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setIsDeleted(Date isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }
