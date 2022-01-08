@@ -23,9 +23,9 @@ public class MonAnServices {
     {
         List<MonAn> MonAns = new ArrayList<>();
         try(Connection conn = JdbcUtils.getConn()){
-            String sql = "SELECT * FROM monan";
+            String sql = "SELECT * FROM monan WHERE isnull(isDeleted)";
             if(kw != null && !kw.isEmpty())
-                sql +=  " WHERE MaMA like concat('%', ?, '%') OR TenMA like concat('%', ?, '%') ";
+                sql +=  " AND (MaMA like concat('%', ?, '%') OR TenMA like concat('%', ?, '%')) ";
             PreparedStatement stm = conn.prepareStatement(sql);
             if(kw != null && !kw.isEmpty())
             {

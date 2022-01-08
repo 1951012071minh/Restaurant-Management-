@@ -42,4 +42,21 @@ public class HoaDonServices {
             stm1.executeUpdate();
         }
     }
+    public HoaDon getHoaDon(int maTiec) throws SQLException{
+        HoaDon d = new HoaDon() ;
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM hoadon WHERE MaTiec = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, maTiec);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                d.setMaTiec(rs.getInt("MaTiec"));
+                d.setMaHD(rs.getInt("MaHD"));
+                d.setThanhTien(rs.getBigDecimal("ThanhTien"));
+                d.setNgayLap(rs.getDate("NgayLap"));
+                d.setTinhTrang(rs.getString("TinhTrang"));
+            }
+        }
+        return d;
+    }
 }

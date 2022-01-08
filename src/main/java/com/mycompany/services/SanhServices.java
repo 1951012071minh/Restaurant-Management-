@@ -23,9 +23,9 @@ public class SanhServices {
     {
         List<Sanh> Sanhs = new ArrayList<>();
         try(Connection conn = JdbcUtils.getConn()){
-            String sql = "SELECT * FROM sanh";
+            String sql = "SELECT * FROM sanh WHERE isnull(isDeleted)";
             if(kw != null && !kw.isEmpty())
-                sql +=  " WHERE MaSanh like concat('%', ?, '%') OR TenSanh like concat('%', ?, '%') ";
+                sql +=  " AND (MaSanh like concat('%', ?, '%') OR TenSanh like concat('%', ?, '%')) ";
             PreparedStatement stm = conn.prepareStatement(sql);
             if(kw != null && !kw.isEmpty())
             {

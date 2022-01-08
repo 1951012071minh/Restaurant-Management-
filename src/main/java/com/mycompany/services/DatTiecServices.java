@@ -32,7 +32,7 @@ public class DatTiecServices {
         return maxID + 1;
     }
 
-    public void addDatTiec(DatTiec d) throws SQLException{
+    public int addDatTiec(DatTiec d) throws SQLException{
         try(Connection conn = JdbcUtils.getConn()){
             PreparedStatement stm = conn.prepareStatement("INSERT INTO dattiec(MaTiec, TenTiec, MaKH, NgayDat, SoLuongBan, SoLuongKhach, MaSanh, NgayToChuc, Buoi)"
                     + " VALUES(?, ? , ?, CURDATE(), ?, ?, ?, ?, ?)");
@@ -45,6 +45,7 @@ public class DatTiecServices {
             stm.setDate(7, (Date) d.getNgayToChuc());
             stm.setString(8, d.getBuoi());       
             stm.executeUpdate();
+            return 1;
         }
     }
     
@@ -67,4 +68,26 @@ public class DatTiecServices {
             stm1.executeUpdate();
         }
     }
-}
+    
+    public DatTiec FindDatTiec(int maTiec) throws SQLException{
+        DatTiec d = new DatTiec();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM dattiec WHERE MaTiec = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, maTiec);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                d.setMaTiec(rs.getInt("MaTiec"));
+                d.setMaSanh(rs.getInt("MaSanh"));
+                d.setBuoi(rs.getString("Buoi"));
+                d.setSoLuongBan(rs.getInt("SoLuongBan"));
+                d.setNgayToChuc(rs.getDate("NgayToChuc"));
+                d.setNgayDat(rs.getDate("NgayDat"));
+                d.setSoLuongKhach(rs.getInt("SoLuongKhach"));
+                d.setTenTiec(rs.getString("TenTiec"));
+                d.setMaKH(rs.getInt("MaKH"));
+            }
+        }
+        return d;
+    }
+    }

@@ -15,9 +15,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.qlnhahang.FDatTiecController">
    <children>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+      <TabPane fx:id="tab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
-      <Tab fx:id="tabDatSanh" text="   Đặt tiệc   ">
+      <Tab text="   Đặt tiệc   ">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -173,54 +173,54 @@
             </AnchorPane>
          </content>
     </Tab>
-      <Tab text=" Thanh toán ">
+      <Tab fx:id="tab4" text=" Thanh toán ">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <VBox layoutX="464.0" layoutY="139.0" prefHeight="108.0" prefWidth="122.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_NgayToChuc" prefWidth="123.0" />
-                        <TextField id="txt_NgayDatTiec" prefWidth="123.0" />
-                        <TextField id="txt_Buoi" prefWidth="123.0" />
+                        <TextField id="txt_NgayToChuc" fx:id="txtNgayDatTT" prefWidth="123.0" />
+                        <TextField id="txt_NgayDatTiec" fx:id="txtNgayToChuc" prefWidth="123.0" />
+                        <TextField id="txt_Buoi" fx:id="txtBuoi" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="353.0" layoutY="142.0" prefHeight="98.0" prefWidth="99.0" spacing="20.0">
                      <children>
-                        <Text id="lbl_NgayToChuc" strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày tổ chức" wrappingWidth="73.16796875" />
                         <Text id="lbl_NgayDatTiec" strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày đặt tiệc" />
+                        <Text id="lbl_NgayToChuc" strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày tổ chức" wrappingWidth="73.16796875" />
                         <Text id="lbl_Buoi" strokeType="OUTSIDE" strokeWidth="0.0" text="Buổi" />
                      </children>
                   </VBox>
                   <VBox layoutX="129.0" layoutY="141.0" prefHeight="99.0" prefWidth="124.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_MaSanhCuoi" prefWidth="123.0" />
-                        <TextField id="txt_TenSanhCuoi" prefWidth="123.0" />
-                        <TextField id="txt_GiaThue" prefWidth="123.0" />
+                        <TextField id="txt_MaSanhCuoi" fx:id="txtMaSanhTT" prefWidth="123.0" />
+                        <TextField id="txt_TenSanhCuoi" fx:id="txtSoLuongKhachTT" prefWidth="123.0" />
+                        <TextField id="txt_GiaThue" fx:id="txtSLBTT" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="140.0" prefHeight="103.0" prefWidth="87.0" spacing="20.0">
                      <children>
                         <Text id="lbl_MaSanhCuoi" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã sảnh cưới" />
-                        <Text id="lbl_TenSanhCuoi" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên sảnh cưới" />
+                        <Text id="lbl_TenSanhCuoi" strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượng khách" />
                         <Text id="lbl_SoLuongBan" strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượng bàn" />
                      </children>
                   </VBox>
                   <VBox layoutX="463.0" layoutY="30.0" prefHeight="80.0" prefWidth="123.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_Tang" prefWidth="123.0" />
-                        <TextField id="txt_SĐT" prefWidth="123.0" />
+                        <TextField id="txt_Tang" fx:id="txtCMND" prefWidth="123.0" />
+                        <TextField id="txt_SĐT" fx:id="txtSDT" prefWidth="123.0" />
                      </children>
                   </VBox>
-                  <VBox layoutX="351.0" layoutY="32.0" prefHeight="83.0" prefWidth="102.0" spacing="20.0">
+                  <VBox layoutX="351.0" layoutY="34.0" prefHeight="83.0" prefWidth="102.0" spacing="20.0">
                      <children>
                         <Text id="lbl_CMND" strokeType="OUTSIDE" strokeWidth="0.0" text="CMND" />
                         <Text id="lbl_SĐT" strokeType="OUTSIDE" strokeWidth="0.0" text="Số điện thoại" />
                      </children>
                   </VBox>
-                  <VBox layoutX="130.0" layoutY="33.0" prefHeight="67.0" prefWidth="124.0" spacing="12.0">
+                  <VBox layoutX="130.0" layoutY="30.0" prefHeight="67.0" prefWidth="124.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_MaKhachHang" prefWidth="123.0" />
-                        <TextField id="txt_HoVaTen" prefWidth="123.0" />
+                        <TextField id="txt_MaKhachHang" fx:id="txtMaKHTT" prefWidth="123.0" />
+                        <TextField id="txt_HoVaTen" fx:id="txtTenKHTT" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="15.0" layoutY="34.0" prefHeight="78.0" prefWidth="116.0" spacing="20.0">
@@ -229,12 +229,7 @@
                         <Text id="lbl_HoVaTen" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ và tên" />
                      </children>
                   </VBox>
-                  <Text id="lbl_DanhSachSanhCuoi" layoutX="3.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách dịch vụ" />
-                  <Text id="lbl_ThongTinSanhDaChon" layoutX="247.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Xác nhận thanh toán">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Text>
+                  <Text id="lbl_DanhSachSanhCuoi" layoutX="15.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách dịch vụ" />
                   <Button id="btn_XacNhan" layoutX="597.0" layoutY="502.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xác nhận" textFill="RED">
                      <font>
                         <Font size="15.0" />
@@ -242,9 +237,14 @@
                   </Button>
                   <Text id="lbl_DanhSachSanhCuoi" layoutX="365.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách món ăn" />
                   <Text id="lbl_Buoi" layoutX="474.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng tiền" />
-                  <TextField id="txt_TongTien" layoutX="563.0" layoutY="469.0" prefHeight="25.0" prefWidth="136.0" />
-                  <TableView layoutX="10.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
-                  <TableView layoutX="359.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
+                  <TextField id="txt_TongTien" fx:id="txt_TongTien" layoutX="563.0" layoutY="469.0" prefHeight="25.0" prefWidth="136.0" />
+                  <TableView fx:id="tvDatDV" layoutX="10.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
+                  <TableView fx:id="tvDatMon" layoutX="359.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
+                  <Text id="lbl_ThongTinSanhDaChon" layoutX="-9.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Xác nhận thanh toán" textAlignment="CENTER" wrappingWidth="700.0000000000001">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
         </content>

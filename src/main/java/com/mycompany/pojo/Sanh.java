@@ -6,6 +6,7 @@
 package com.mycompany.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Sanh {
     private int SucChua;
     private String Tang;
     private String TenSanh;
-
+    private Date isDeleted;
     public Sanh() {
     }
 
@@ -94,6 +95,20 @@ public class Sanh {
      */
     public void setTenSanh(String TenSanh) {
         this.TenSanh = TenSanh;
+    }
+
+    /**
+     * @return the isDeleted
+     */
+    public Date getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setIsDeleted(Date isDeleted) {
+        this.isDeleted = isDeleted;
     }
    
 }
