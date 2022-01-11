@@ -87,6 +87,11 @@
                               <Font size="15.0" />
                            </font>
                         </Button>
+                        <Button id="btn_CapNhat" layoutX="14.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateDatTiecHandler" prefWidth="100.0" text="Qu" textFill="RED">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                </children>
             </AnchorPane>
         </content>
