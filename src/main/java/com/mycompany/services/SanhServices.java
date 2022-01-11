@@ -37,7 +37,7 @@ public class SanhServices {
                 Sanh s = new Sanh();
                 s.setMaSanh(rs.getInt("MaSanh"));
                 s.setTenSanh(rs.getString("TenSanh"));
-                s.setTang(rs.getString("Tang"));
+                s.setTang(rs.getInt("Tang"));
                 s.setSucChua(rs.getInt("SucChua"));
                 s.setDonGia(rs.getBigDecimal("DonGia"));
                 Sanhs.add(s);
@@ -45,5 +45,82 @@ public class SanhServices {
         }
         return Sanhs;
     }
+    public int getMaxSanh() throws SQLException {
+        int maxSanh = 0;
+        try(Connection conn = JdbcUtils.getConn()){
+                String sql = "SELECT MAX(MaSanh) FROM Sanh";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                maxSanh = rs.getInt(1);
+            }
+        return (maxSanh + 1);
+        }
+    }
+      
+        public Sanh findSanh(String kw) throws SQLException{
+        Sanh s = new Sanh();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM Sanh WHERE TenSanh = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, kw);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                s.setMaSanh(rs.getInt("MaSanh"));
+                s.setTenSanh(rs.getString("TenSanh"));
+                s.setTang(rs.getInt("Tang"));
+                s.setSucChua(rs.getInt("SucChua"));
+                s.setIsDeleted(rs.getDate("isDeleted"));
+                s.setDonGia(rs.getBigDecimal("DonGia"));
+            }
+        }
+        return s;
+        }
+        public void addSanhVaoDB(Sanh s) throws  SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                PreparedStatement stm= conn.prepareStatement("INSERT INTO  Sanh(MaSanh, TenSanh,Tang,SucChua,DonGia)" + "VALUES(?,?,?,?,?)");
+                stm.setInt(1, s.getMaSanh());
+                stm.setString(2, s.getTenSanh());
+                stm.setInt(3, s.getTang());
+                stm.setInt(4, s.getSucChua());
+                stm.setBigDecimal(5, s.getDonGia());
+                stm.executeUpdate();
+            }
+        }
+        public void updateSanhVaoDB(Sanh s) throws  SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                PreparedStatement stm= conn.prepareStatement("UPDATE Sanh\n"
+                        + "set TenSanh = ?, Tang = ?, SucChua = ?, DonGia = ? "
+                        + "where MaSanh = ?");
+                stm.setString(1, s.getTenSanh());
+                stm.setInt(2, s.getTang());
+                stm.setInt(3, s.getSucChua());
+                stm.setBigDecimal(4, s.getDonGia());
+                stm.setInt(5, s.getMaSanh());
+                stm.executeUpdate();
+            }
+        }
+        public void addSanhVaoDBIsDeleted(Sanh s) throws  SQLException{
+                try(Connection conn = JdbcUtils.getConn()){
+                    PreparedStatement stm = conn.prepareStatement("UPDATE Sanh\n"
+                            + "set TenSanh = ?, Tang = ?, SucChua = ?, DonGia = ?, isDeleted = null "
+                            + "where MaSanh = ?");
+                    stm.setString(1, s.getTenSanh());
+                    stm.setInt(2, s.getTang());
+                    stm.setInt(3, s.getSucChua());
+                    stm.setBigDecimal(4, s.getDonGia());
+                    stm.setInt(5, s.getMaSanh());
+                    stm.executeUpdate();
+                }
+            }
+        public void xoaSanh(Sanh s) throws SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                String sql = "UPDATE Sanh \n SET isDeleted = curDate()\n"
+                        + "WHERE TenSanh = ?";
+                PreparedStatement stm = conn.prepareStatement(sql);
+                stm.setString(1, s.getTenSanh());
+                stm.executeUpdate();
+            }
+        }
 
 }

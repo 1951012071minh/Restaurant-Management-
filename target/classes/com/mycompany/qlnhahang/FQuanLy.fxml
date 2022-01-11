@@ -124,7 +124,7 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab text="QL sảnh">
+           <Tab text="QL sảnh">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -137,12 +137,12 @@
                   </VBox>
                   <VBox layoutX="122.0" layoutY="25.0" prefHeight="98.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_MaSanh" />
-                        <TextField id="txt_TenSanh" />
-                        <TextField id="txt_Tang" />
+                        <TextField id="txt_MaSanh" fx:id="txt_MaSanh" disable="true" />
+                        <TextField id="txt_TenSanh" fx:id="txt_TenSanh" />
+                        <TextField id="txt_Tang" fx:id="txt_Tang" />
                      </children>
                   </VBox>
-                  <VBox layoutX="379.0" layoutY="25.0" prefHeight="69.0" prefWidth="100.0" spacing="18.0">
+                  <VBox layoutX="379.0" layoutY="28.0" prefHeight="69.0" prefWidth="100.0" spacing="18.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượng khách" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Giá tiền" />
@@ -150,17 +150,16 @@
                   </VBox>
                   <VBox layoutX="511.0" layoutY="25.0" prefHeight="74.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_SoLuongKhach" />
-                        <TextField id="txt_GiaTien" />
+                        <TextField id="txt_SoLuongKhach" fx:id="txt_SucChua" />
+                        <TextField id="txt_GiaTien" fx:id="txt_GiaTien" />
                      </children>
                   </VBox>
-                  <Button id="btn_Them" layoutX="429.0" layoutY="123.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
-                  <Button id="btn_CapNhat" layoutX="526.0" layoutY="123.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
-                  <Button id="btn_Xoa" layoutX="622.0" layoutY="123.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
+                  <Button layoutX="444.0" layoutY="123.0" mnemonicParsing="false" onAction="#clickThemSanh" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
+                  <Button id="btn_CapNhat" layoutX="538.0" layoutY="123.0" mnemonicParsing="false" onAction="#updateDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
+                  <Button id="btn_Xoa" layoutX="622.0" layoutY="123.0" mnemonicParsing="false" onAction="#deleteDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
                   <Text layoutX="14.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách các sảnh" />
-                  <TextField id="txt_DSSanh" layoutX="140.0" layoutY="175.0" prefHeight="26.0" prefWidth="240.0" />
-                  <ComboBox id="cb_DSSanh" layoutX="423.0" layoutY="175.0" prefHeight="26.0" prefWidth="240.0" />
-                  <TableView layoutX="12.0" layoutY="206.0" prefHeight="290.0" prefWidth="734.0" />
+                  <TextField id="txt_DSSanh" fx:id="txt_TimKiemSanh" layoutX="140.0" layoutY="175.0" prefHeight="26.0" prefWidth="606.0" />
+                  <TableView fx:id="tbv_DanhSachSanh" layoutX="10.0" layoutY="201.0" prefHeight="290.0" prefWidth="734.0" />
                </children>
             </AnchorPane>
          </content>
@@ -178,9 +177,9 @@
                   </VBox>
                   <VBox layoutX="145.0" layoutY="29.0" prefHeight="108.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_MaThucPhan" />
-                        <TextField id="txt_TenThucPham" />
-                        <TextField id="txt_LoaiThucPham" />
+                        <TextField id="txt_MaThucPhan" fx:id="txt_MaMA" disable="true" />
+                        <TextField id="txt_TenThucPham" fx:id="txt_TenMA" />
+                        <TextField id="txt_LoaiThucPham" fx:id="txt_Loai" />
                      </children>
                   </VBox>
                   <VBox layoutX="418.0" layoutY="29.0" prefHeight="100.0" prefWidth="100.0" spacing="20.0">
@@ -191,17 +190,17 @@
                   </VBox>
                   <VBox layoutX="488.0" layoutY="29.0" prefHeight="76.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_DonViTinh" />
-                        <TextField id="txt_GiaTien" />
+                        <TextField id="txt_DonViTinh" fx:id="txt_DonViTinh" />
+                        <TextField id="txt_GiaTien" fx:id="txt_DonGiaMonAn" />
                      </children>
                   </VBox>
-                  <Button id="btn_Them" layoutX="410.0" layoutY="137.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
-                  <Button id="btn_CapNhat" layoutX="518.0" layoutY="137.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
-                  <Button id="btn_Xoa" layoutX="624.0" layoutY="137.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
+                  <Button id="btn_Them" layoutX="410.0" layoutY="137.0" mnemonicParsing="false" onAction="#clickThemMonAn" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
+                  <Button id="btn_CapNhat" layoutX="518.0" layoutY="137.0" mnemonicParsing="false" onAction="#updateMonAnHandler" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
+                  <Button id="btn_Xoa" layoutX="624.0" layoutY="137.0" mnemonicParsing="false" onAction="#deleteMonAnHandler" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
                   <Text layoutX="14.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách thức ăn" />
-                  <TextField id="txt_DSTA" layoutX="145.0" layoutY="196.0" prefHeight="26.0" prefWidth="240.0" />
-                  <ComboBox id="cb_DSTA" layoutX="413.0" layoutY="196.0" prefHeight="26.0" prefWidth="240.0" />
-                     <TableView fx:id="tvDichVu1" layoutX="6.0" layoutY="235.0" prefHeight="262.0" prefWidth="746.0" />
+                  <TextField id="txt_DSTA" fx:id="txt_TimKiemMonAn" layoutX="145.0" layoutY="196.0" prefHeight="26.0" prefWidth="583.0" />
+                     <TableView fx:id="tbv_DanhSachMonAn" layoutX="14.0" layoutY="239.0" prefHeight="259.0" prefWidth="730.0" />
+
                </children>
             </AnchorPane>
          </content>
@@ -210,25 +209,27 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="415.0" prefWidth="641.0">
                <children>
-                  <VBox layoutX="14.0" layoutY="32.0" prefHeight="90.0" prefWidth="100.0" spacing="18.0">
-                     <children>
+                  <VBox layoutX="13.0" layoutY="32.0" prefHeight="90.0" prefWidth="100.0" spacing="18.0">
+                        <children>
+                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã dịch vụ" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên dịch vụ" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá" />
-                     </children>
+                        </children>
                   </VBox>
                   <VBox layoutX="137.0" layoutY="32.0" prefHeight="72.0" prefWidth="210.0" spacing="10.0">
-                     <children>
-                        <TextField id="txt_TenDV" />
-                        <TextField id="txt_DonGia" />
-                     </children>
+                        <children>
+                           <TextField fx:id="txt_MaDV" disable="true" />
+                        <TextField fx:id="txt_TenDV" />
+                        <TextField fx:id="txt_DonGiaDV" />
+                        </children>
                   </VBox>
                   <Text layoutX="14.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách Dịch vụ" />
-                  <TextField id="txt_DSDV" layoutX="136.0" layoutY="170.0" prefHeight="26.0" prefWidth="240.0" />
-                  <ComboBox id="cb_DSDV" layoutX="405.0" layoutY="170.0" prefHeight="26.0" prefWidth="240.0" />
-                  <Button id="btn_Them" layoutX="379.0" layoutY="97.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
-                  <Button id="btn_CapNhat" layoutX="475.0" layoutY="97.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
-                  <Button id="btn_Xoa" layoutX="570.0" layoutY="97.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
-                  <TableView fx:id="tvDichVu" layoutX="12.0" layoutY="214.0" prefHeight="282.0" prefWidth="734.0" />
+                  <TextField fx:id="txt_TimKiemDichVu" layoutX="136.0" layoutY="170.0" prefHeight="26.0" prefWidth="608.0" />
+                  <Button layoutX="379.0" layoutY="97.0" mnemonicParsing="false" onAction="#clickThemDichVu" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
+                  <Button layoutX="475.0" layoutY="97.0" mnemonicParsing="false" onAction="#updateDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
+                  <Button layoutX="570.0" layoutY="97.0" mnemonicParsing="false" onAction="#deleteDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
+                  <TableView fx:id="tbv_DanhSachDichVu" layoutX="12.0" layoutY="223.0" prefHeight="282.0" prefWidth="734.0" />
+
                </children>
             </AnchorPane>
          </content>

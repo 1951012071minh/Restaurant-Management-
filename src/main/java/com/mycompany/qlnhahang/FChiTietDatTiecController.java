@@ -5,15 +5,26 @@
  */
 package com.mycompany.qlnhahang;
 
+import com.mycompany.conf.Utils;
 import com.mycompany.pojo.DatTiec;
+import com.mycompany.pojo.DichVu;
 import com.mycompany.pojo.HoaDon;
 import com.mycompany.pojo.KhachHang;
+import com.mycompany.pojo.MonAn;
+import com.mycompany.pojo.Sanh;
 import com.mycompany.services.DatDichVuServices;
 import com.mycompany.services.DatMonAnServices;
 import com.mycompany.services.DatTiecServices;
+import com.mycompany.services.DichVuServices;
 import com.mycompany.services.HoaDonServices;
+import com.mycompany.services.MonAnServices;
+import com.mycompany.services.SanhServices;
+import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,9 +32,13 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -50,6 +65,8 @@ public class FChiTietDatTiecController implements Initializable {
     @FXML private TextField txtBuoi;
     @FXML private TextField txtMaTiec;
     @FXML private Button btn_QuayLai;
+    
+ 
     private KhachHang khachHang;
     /**
      * Initializes the controller class.
@@ -124,4 +141,7 @@ public class FChiTietDatTiecController implements Initializable {
         Stage stage = (Stage) btn_QuayLai.getScene().getWindow();
         stage.close();
     }
+    
+    
+   
 }

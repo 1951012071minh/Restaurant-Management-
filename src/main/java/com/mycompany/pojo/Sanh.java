@@ -17,7 +17,7 @@ public class Sanh {
     private BigDecimal DonGia;
     private int MaSanh;
     private int SucChua;
-    private String Tang;
+    private int Tang;
     private String TenSanh;
     private Date isDeleted;
     public Sanh() {
@@ -72,14 +72,14 @@ public class Sanh {
     /**
      * @return the Tang
      */
-    public String getTang() {
+    public int getTang() {
         return Tang;
     }
 
     /**
      * @param Tang the Tang to set
      */
-    public void setTang(String Tang) {
+    public void setTang(int Tang) {
         this.Tang = Tang;
     }
 
