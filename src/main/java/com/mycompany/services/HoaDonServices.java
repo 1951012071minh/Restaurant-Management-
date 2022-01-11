@@ -7,10 +7,15 @@ package com.mycompany.services;
 
 import com.mycompany.conf.JdbcUtils;
 import com.mycompany.pojo.HoaDon;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -55,6 +60,51 @@ public class HoaDonServices {
                 d.setThanhTien(rs.getBigDecimal("ThanhTien"));
                 d.setNgayLap(rs.getDate("NgayLap"));
                 d.setTinhTrang(rs.getString("TinhTrang"));
+            }
+        }
+        return d;
+    }
+    public List<HoaDon> getListDichVu(Date d1, Date d2) throws SQLException
+    {
+        List<HoaDon> datTiecs = new ArrayList<>();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM hoadon ";
+            if(d1 != null && d2 != null)
+                sql +=  " WHERE NgayLap >= ? AND NgayLap <= ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            if(d1 != null && d2 != null)
+            {
+                stm.setDate(1, (java.sql.Date) d1);
+                stm.setDate(2, (java.sql.Date) d2);
+            }        
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                HoaDon d = new HoaDon();
+                d.setMaTiec(rs.getInt("MaTiec"));
+                d.setMaHD(rs.getInt("MaHD"));
+                d.setTinhTrang(rs.getString("TinhTrang"));
+                d.setNgayLap(rs.getDate("NgayLap"));
+                d.setThanhTien(rs.getBigDecimal("ThanhTien"));
+                datTiecs.add(d);
+            }
+        }
+        return datTiecs;
+    }
+    public BigDecimal getDoanhThu(Date d1, Date d2) throws SQLException{
+        BigDecimal d = new BigDecimal(BigInteger.ZERO);
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT SUM(ThanhTien) FROM hoadon ";
+            if(d1 != null && d2 != null)
+                sql +=  " WHERE NgayLap >= ? AND NgayLap <= ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            if(d1 != null && d2 != null)
+            {
+                stm.setDate(1, (java.sql.Date) d1);
+                stm.setDate(2, (java.sql.Date) d2);
+            }        
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                d = rs.getBigDecimal(1);
             }
         }
         return d;

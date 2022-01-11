@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -244,8 +245,8 @@
                   </VBox>
                   <VBox layoutX="154.0" layoutY="13.0" prefHeight="106.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_MaTiec" fx:id="txtMaTiecDDT" />
-                        <TextField id="txt_MaKH" fx:id="txtMaKHDDT" />
+                        <TextField id="txt_MaTiec" fx:id="txtMaTiecDDT" editable="false" />
+                        <TextField id="txt_MaKH" fx:id="txtMaKHDDT" editable="false" />
                      </children>
                   </VBox>
                   <VBox layoutX="407.0" layoutY="16.0" prefHeight="98.0" prefWidth="100.0" spacing="22.0">
@@ -257,9 +258,9 @@
                   </VBox>
                   <VBox layoutX="518.0" layoutY="13.0" prefHeight="69.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_NgayDatTiec" fx:id="txtNgayDatDDT" />
-                        <TextField id="txt_NgayToChuc" fx:id="txtNgayToChucDDT" />
-                        <TextField id="txt_ThanhTien" fx:id="txtBuoiDDT" />
+                        <TextField id="txt_NgayDatTiec" fx:id="txtNgayDatDDT" editable="false" />
+                        <TextField id="txt_NgayToChuc" fx:id="txtNgayToChucDDT" editable="false" />
+                        <TextField id="txt_ThanhTien" fx:id="txtBuoiDDT" editable="false" />
                      </children>
                   </VBox>
                   <TextField id="txt_DSDaXN" fx:id="txtTimKiemDDT" layoutX="154.0" layoutY="169.0" prefHeight="26.0" prefWidth="594.0" promptText="Tìm kiếm..." />
@@ -282,14 +283,14 @@
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã hoá đơn" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã tiệc" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã khách hàng" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày lập" />
                      </children>
                   </VBox>
                   <VBox layoutX="140.0" layoutY="22.0" prefHeight="108.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_MaHD" />
-                        <TextField id="txt_MaTiec" />
-                        <TextField id="txt_MaKH" />
+                        <TextField id="txt_MaHD" fx:id="txtMaHD" editable="false" />
+                        <TextField id="txt_MaTiec" fx:id="txtMaTiecHD" editable="false" />
+                        <TextField id="txt_MaKH" fx:id="txtNgayLapHD" editable="false" />
                      </children>
                   </VBox>
                   <VBox layoutX="392.0" layoutY="26.0" prefHeight="98.0" prefWidth="100.0" spacing="18.0">
@@ -300,27 +301,27 @@
                   </VBox>
                   <VBox layoutX="522.0" layoutY="22.0" prefHeight="105.0" prefWidth="210.0" spacing="10.0">
                      <children>
-                        <TextField id="txt_ThanhTien" />
-                        <TextField id="txt_TinhTrang" prefHeight="26.0" prefWidth="100.0" />
+                        <TextField id="txt_ThanhTien" fx:id="txtThanhTienHD" editable="false" />
+                        <TextField id="txt_TinhTrang" fx:id="txtTinhTrangHD" editable="false" prefHeight="26.0" prefWidth="100.0" />
                      </children>
                   </VBox>
                   <Text layoutX="13.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách hoá đơn" />
-                  <ComboBox id="cb_DSHD" layoutX="573.0" layoutY="189.0" prefHeight="26.0" prefWidth="170.0" />
-                  <VBox layoutX="361.0" layoutY="161.0" prefHeight="66.0" prefWidth="36.0" spacing="18.0">
+                  <VBox layoutX="539.0" layoutY="148.0" prefHeight="66.0" prefWidth="36.0" spacing="18.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To" />
                      </children>
                   </VBox>
-                  <VBox layoutX="398.0" layoutY="158.0" prefHeight="62.0" prefWidth="168.0" spacing="8.0">
+                  <VBox layoutX="576.0" layoutY="145.0" prefHeight="62.0" prefWidth="168.0" spacing="8.0">
                      <children>
-                        <DatePicker />
-                        <DatePicker />
+                        <DatePicker fx:id="dpFromHD" />
+                        <DatePicker fx:id="dpToHD" />
                      </children>
                   </VBox>
-                  <TableView layoutX="12.0" layoutY="225.0" prefHeight="233.0" prefWidth="734.0" />
-                     <TextField id="txt_TinhTrang" layoutX="612.0" layoutY="465.0" prefHeight="14.0" prefWidth="134.0" />
+                  <TableView fx:id="tvHoaDon" layoutX="12.0" layoutY="225.0" prefHeight="233.0" prefWidth="734.0" />
+                     <TextField id="txt_TinhTrang" fx:id="txtDoanhThuHD" layoutX="612.0" layoutY="465.0" prefHeight="14.0" prefWidth="134.0" />
                      <Text layoutX="545.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doanh thu:" />
+                     <RadioButton fx:id="rbToanBoHD" layoutX="623.0" layoutY="206.0" mnemonicParsing="false" selected="true" text="Toàn bộ hóa đơn" />
                </children>
             </AnchorPane>
          </content>
