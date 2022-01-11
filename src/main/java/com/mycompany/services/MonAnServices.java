@@ -45,4 +45,82 @@ public class MonAnServices {
         }
         return MonAns;
     }
+
+    public int getMaxMA() throws SQLException{
+            int maxMA = 0;
+            try(Connection conn = JdbcUtils.getConn()){
+                String sql = "SELECT MAX(MaMA) FROM MonAn";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                maxMA = rs.getInt(1);
+            }
+            return (maxMA + 1);
+        }
+    }
+    public MonAn findMonAn(String kw) throws SQLException{
+        MonAn ma = new MonAn();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM MonAn WHERE TenMA = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, kw);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                ma.setMaMA(rs.getInt("MaMA"));
+                ma.setTenMA(rs.getString("TenMA"));
+                ma.setDonGia(rs.getBigDecimal("DonGia"));
+                ma.setLoai(rs.getString("Loai"));
+                ma.setDonViTinh(rs.getString("DonViTinh"));
+                ma.setIsDeleted(rs.getDate("isDeleted"));
+            }
+        }
+        return ma;
+    }
+    public void addMonAnVaoDB(MonAn ma) throws  SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                PreparedStatement stm= conn.prepareStatement("INSERT INTO MonAn(MaMA, TenMA,DonGia,Loai,DonViTinh)" + "VALUES(?,?,?,?,?)");
+                stm.setInt(1, ma.getMaMA());
+                stm.setString(2, ma.getTenMA());
+                stm.setBigDecimal(3, ma.getDonGia());
+                stm.setString(4, ma.getLoai());
+                stm.setString(5, ma.getDonViTinh());
+                stm.executeUpdate();
+            }
+        }
+    public void updateMonAnVaoDB(MonAn ma) throws  SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                PreparedStatement stm= conn.prepareStatement("UPDATE MonAn\n"
+                        + "set TenMA = ?, DonGia = ?, Loai = ?, DonViTinh = ? "
+                        + "where MaMA = ?");
+                stm.setString(1, ma.getTenMA());
+                stm.setBigDecimal(2, ma.getDonGia());
+                stm.setString(3, ma.getLoai());
+                stm.setString(4, ma.getDonViTinh());
+                stm.setInt(5, ma.getMaMA());
+                stm.executeUpdate();
+            }
+        }
+    public void addMonAnVaoDBIsDeleted(MonAn ma) throws  SQLException{
+                try(Connection conn = JdbcUtils.getConn()){
+                    String sql = "UPDATE monan\n"
+                            + "set TenMA = ?, DonGia = ?, Loai = ?, DonViTinh = ?, isDeleted = null "
+                            + "where MaMA = ?";
+                    PreparedStatement stm= conn.prepareStatement(sql);
+                    stm.setString(1, ma.getTenMA());
+                    stm.setBigDecimal(2, ma.getDonGia());
+                    stm.setString(3, ma.getLoai());
+                    stm.setString(4, ma.getDonViTinh());
+                    stm.setInt(5, ma.getMaMA());
+                    stm.executeUpdate();
+                }
+            }
+    public void xoaMonAn(MonAn ma) throws SQLException{
+            try(Connection conn = JdbcUtils.getConn()){
+                String sql = "UPDATE MonAn \n SET isDeleted = curDate()\n"
+                        + "WHERE TenMA = ?";
+                PreparedStatement stm = conn.prepareStatement(sql);
+                stm.setString(1, ma.getTenMA());
+                stm.executeUpdate();
+            }
+        }
 }

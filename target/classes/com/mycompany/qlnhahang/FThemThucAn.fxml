@@ -12,7 +12,6 @@
    <children>
       <VBox layoutX="24.0" layoutY="14.0" prefHeight="162.0" prefWidth="100.0" spacing="21.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã món:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên món:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Loại:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị tính" />
@@ -21,13 +20,12 @@
       </VBox>
       <VBox layoutX="136.0" layoutY="11.0" prefHeight="200.0" prefWidth="210.0" spacing="13.0">
          <children>
-            <TextField />
-            <TextField />
-            <ComboBox prefHeight="26.0" prefWidth="212.0" />
-            <ComboBox prefHeight="26.0" prefWidth="210.0" />
-            <TextField />
+            <TextField fx:id="txt_TenMA" />
+            <ComboBox fx:id="cb_Loai" prefHeight="26.0" prefWidth="212.0" />
+            <ComboBox fx:id="cb_DonViTinh" prefHeight="26.0" prefWidth="210.0" />
+            <TextField fx:id="txt_DonGia" />
          </children>
       </VBox>
-      <Button layoutX="287.0" layoutY="198.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="Thêm" />
+      <Button layoutX="287.0" layoutY="198.0" mnemonicParsing="false" onAction="#addMonAnHandler" prefHeight="26.0" prefWidth="58.0" text="Thêm" />
    </children>
 </AnchorPane>
