@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="482.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.qlnhahang.FGiaoDienKHController">
+   <children>
+      <ImageView fitHeight="482.0" fitWidth="700.0" pickOnBounds="true">
+         <image>
+            <Image url="@../picture/bgMain.jpg" />
+         </image>
+      </ImageView>
+      <HBox layoutY="161.0" prefHeight="190.0" prefWidth="700.0" spacing="130.0">
+         <children>
+            <ImageView fx:id="imgDatTiec" fitHeight="190.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../picture/Menu.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgThongTinDatTiec" fitHeight="190.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../picture/danh%20sach.png" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets left="100.0" />
+         </padding>
+      </HBox>
+      <ImageView fitHeight="62.0" fitWidth="91.0" layoutX="305.0">
+         <image>
+            <Image url="@../picture/LogoNhaHang.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="#bf1a1a" layoutX="101.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đặt tiệc" textAlignment="CENTER" wrappingWidth="190.0">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#bf1a1a" layoutX="421.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin tiệc đã đặt" textAlignment="CENTER" wrappingWidth="190.0">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#bf1a1a" layoutX="264.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KALINE WEDDING">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

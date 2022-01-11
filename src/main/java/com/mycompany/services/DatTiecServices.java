@@ -13,6 +13,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Alert;
 
 /**
@@ -68,6 +70,14 @@ public class DatTiecServices {
             stm1.executeUpdate();
         }
     }
+    public void delDatTiec(int maTiec) throws SQLException{
+        try(Connection conn = JdbcUtils.getConn()){
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM dattiec\n" +
+"           where MaTiec = ?");
+            stm.setInt(1, maTiec);
+            stm.executeUpdate();
+        }
+    }
     
     public DatTiec FindDatTiec(int maTiec) throws SQLException{
         DatTiec d = new DatTiec();
@@ -90,4 +100,57 @@ public class DatTiecServices {
         }
         return d;
     }
+    public List<DatTiec> getListDatTiecByKhachHang(int maKH) throws SQLException{
+        List<DatTiec> l = new ArrayList<>();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM dattiec WHERE MaKH = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, maKH);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                DatTiec d = new DatTiec();
+                d.setMaTiec(rs.getInt("MaTiec"));
+                d.setMaSanh(rs.getInt("MaSanh"));
+                d.setBuoi(rs.getString("Buoi"));
+                d.setSoLuongBan(rs.getInt("SoLuongBan"));
+                d.setNgayToChuc(rs.getDate("NgayToChuc"));
+                d.setNgayDat(rs.getDate("NgayDat"));
+                d.setSoLuongKhach(rs.getInt("SoLuongKhach"));
+                d.setTenTiec(rs.getString("TenTiec"));
+                d.setMaKH(rs.getInt("MaKH"));
+                l.add(d);
+            }
+        }
+        return l;
     }
+    public List<DatTiec> getListDichVu(String kw) throws SQLException
+    {
+        List<DatTiec> datTiecs = new ArrayList<>();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM dattiec ";
+            if(kw != null && !kw.isEmpty())
+                sql +=  " WHERE MaTiec like concat('%', ?, '%') OR TenTiec like concat('%', ?, '%')";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            if(kw != null && !kw.isEmpty())
+            {
+                stm.setString(1, kw);
+                stm.setString(2, kw);
+            }        
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                DatTiec d = new DatTiec();
+                d.setMaTiec(rs.getInt("MaTiec"));
+                d.setMaSanh(rs.getInt("MaSanh"));
+                d.setBuoi(rs.getString("Buoi"));
+                d.setSoLuongBan(rs.getInt("SoLuongBan"));
+                d.setNgayToChuc(rs.getDate("NgayToChuc"));
+                d.setNgayDat(rs.getDate("NgayDat"));
+                d.setSoLuongKhach(rs.getInt("SoLuongKhach"));
+                d.setTenTiec(rs.getString("TenTiec"));
+                d.setMaKH(rs.getInt("MaKH"));
+                datTiecs.add(d);
+            }
+        }
+        return datTiecs;
+    }
+}

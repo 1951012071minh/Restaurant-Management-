@@ -17,6 +17,7 @@ C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\pojo\HoaDon.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\services\DatDichVuServices.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\pojo\BoPhan.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\pojo\KhachHang.java
+C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\qlnhahang\FGiaoDienKHController.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\pojo\DatMonAn.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\services\NhanVienServices.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\qlnhahang\FDoiMKController.java
@@ -27,6 +28,7 @@ C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\pojo\NhanVien.jav
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\qlnhahang\FDoiiMKController.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\services\MonAnServices.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\conf\JdbcUtils.java
+C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\qlnhahang\FTiecDaDatController.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\qlnhahang\FDangKyNhanVienController.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\services\BoPhanServices.java
 C:\Users\ANHMINH\Desktop\QLNhaHang\src\main\java\com\mycompany\services\DatMonAnServices.java

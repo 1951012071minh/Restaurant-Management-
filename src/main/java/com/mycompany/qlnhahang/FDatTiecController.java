@@ -27,6 +27,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +46,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+//import //.Context;
 /**
  * FXML Controller class
  *
@@ -113,8 +114,8 @@ public class FDatTiecController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         try {
-            this.LoadTabDatTiec();
             this.LoadTabDatDichVu();
             this.LoadTabDatMonAn();
             this.LoadTabThanhToan();
@@ -122,8 +123,6 @@ public class FDatTiecController implements Initializable {
             Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
         }    
     }
-    
-    
     
     //tabDatTiec
     private void loadTvSanhView(){
@@ -160,35 +159,31 @@ public class FDatTiecController implements Initializable {
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
                     Sanh rowData = row.getItem();
-                    this.txtMaSanh.clear();
-                    this.txtMaSanh.appendText(String.valueOf(rowData.getMaSanh()));
-                    this.txtTenSanh.clear();
-                    this.txtTenSanh.appendText(String.valueOf(rowData.getTenSanh()));
-                    this.txtTang.clear();
-                    this.txtTang.appendText(String.valueOf(rowData.getTang()));
-                    this.txtSucChua.clear();
-                    this.txtSucChua.appendText(String.valueOf(rowData.getSucChua()));
-                    this.txtDonGiaSanh.clear();
-                    this.txtDonGiaSanh.appendText(String.valueOf(rowData.getDonGia()));
+                    this.txtMaSanh.setText(String.valueOf(rowData.getMaSanh()));
+                    this.txtTenSanh.setText(String.valueOf(rowData.getTenSanh()));
+                    this.txtTang.setText(String.valueOf(rowData.getTang()));
+                    this.txtSucChua.setText(String.valueOf(rowData.getSucChua()));
+                    this.txtDonGiaSanh.setText(String.valueOf(rowData.getDonGia()));
                 }
             });
             return row;
         });
     }
     
-    private void LoadTabDatTiec() throws SQLException{
+    public void LoadTabDatTiec(KhachHang k) throws SQLException{
         DatTiecServices s = new DatTiecServices();
-        KhachHangServices k = new KhachHangServices();
-        this.khachHang = k.getKhachHang(1);
-        this.txtTenKH.appendText(khachHang.getTenKH());
-        this.txtMaKH.appendText(Integer.toString(khachHang.getMaKH()));
+        this.khachHang = k;
+        this.txtTenKH.setText(khachHang.getTenKH());
+        this.txtMaKH.setText(Integer.toString(khachHang.getMaKH()));
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = new java.util.Date();
-        this.txtNgayDat.appendText(d.format(date));
+        this.txtNgayDat.setText(d.format(date));
+        this.dpNgayDat.setValue(LocalDate.now());
         this.maTiec = s.getMaxDatTiec();
-        this.txtMaTiec.appendText(Integer.toString(maTiec));
+        this.txtMaTiec.setText(Integer.toString(maTiec));
         ObservableList a =  FXCollections.observableArrayList("Sáng", "Tối");     
         cbBuoi.setItems(a);
+        cbBuoi.setValue(a.get(0));
         this.loadTvSanhView();
         this.MouseClickTvSanh();
         try {
@@ -314,8 +309,7 @@ public class FDatTiecController implements Initializable {
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
                     MonAn rowData = row.getItem();
-                    this.txtMaMA.clear();
-                    this.txtMaMA.appendText(String.valueOf(rowData.getMaMA()));
+                    this.txtMaMA.setText(String.valueOf(rowData.getMaMA()));
                 }
             });
             return row;
@@ -328,10 +322,10 @@ public class FDatTiecController implements Initializable {
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
                     DatMonAn rowData = row.getItem();
-                    this.txtMaMA.clear();
-                    this.txtMaMA.appendText(String.valueOf(rowData.getMaMA()));
+                    //this.txtMaMA.clear();
+                    this.txtMaMA.setText(String.valueOf(rowData.getMaMA()));
                     this.txtSoLuong.clear();
-                    this.txtSoLuong.appendText(String.valueOf(rowData.getSoLuong()));
+                    this.txtSoLuong.setText(String.valueOf(rowData.getSoLuong()));
                 }
             });
             return row;
@@ -372,12 +366,10 @@ public class FDatTiecController implements Initializable {
         DatMonAnServices s = new DatMonAnServices();
         try{
                 s.addDatMonAn(d);
-                this.txtTongSoMA.clear();
-                this.txtTongSoMA.appendText(Integer.toString(s.getTongMonAn(maTiec)));
+                this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
                 this.txtMaMA.clear();
                 this.txtSoLuong.clear();
-                this.txtThanhTienMA.clear();
-                this.txtThanhTienMA.appendText(s.getThanhTienMonAn(maTiec).toString());
+                this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
                 this.loadTvDatMonAnData(maTiec);
                 Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
             }catch(SQLException ex){
@@ -398,11 +390,10 @@ public class FDatTiecController implements Initializable {
         try{
                 s.xoaDatMonAn(d);
                 this.txtTongSoMA.clear();
-                this.txtTongSoMA.appendText(Integer.toString(s.getTongMonAn(maTiec)));
+                this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
                 this.txtMaMA.clear();
                 this.txtSoLuong.clear();
-                this.txtThanhTienMA.clear();
-                this.txtThanhTienMA.appendText(s.getThanhTienMonAn(maTiec).toString());
+                this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
                 this.loadTvDatMonAnData(maTiec);
                 Utils.getBox("Xóa thành công!", Alert.AlertType.INFORMATION).show();
             }catch(SQLException ex){
@@ -425,8 +416,7 @@ public class FDatTiecController implements Initializable {
                 s.updateDatMonAn(d);
                 this.txtMaMA.clear();
                 this.txtSoLuong.clear();
-                this.txtThanhTienMA.clear();
-                this.txtThanhTienMA.appendText(s.getThanhTienMonAn(maTiec).toString());
+                this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
                 this.loadTvDatMonAnData(maTiec);
                 Utils.getBox("Cập nhật thành công!", Alert.AlertType.INFORMATION).show();
             }catch(SQLException ex){
@@ -438,7 +428,12 @@ public class FDatTiecController implements Initializable {
         }
     }
     
-    
+    public void huyTiec() throws SQLException, ParseException{
+        if(flag == true){
+            DatTiecServices d = new DatTiecServices();
+            d.delDatTiec(this.maTiec);
+        }
+    }
     
     //tabDatDV
     private void loadTvDichVuView(){
@@ -488,10 +483,8 @@ public class FDatTiecController implements Initializable {
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
                     DichVu rowData = row.getItem();
-                    this.txtMaDV.clear();
-                    this.txtMaDV.appendText(String.valueOf(rowData.getMaDV()));
-                    this.txtDonGiaDV.clear();
-                    this.txtDonGiaDV.appendText(String.valueOf(rowData.getDonGia()));
+                    this.txtMaDV.setText(String.valueOf(rowData.getMaDV()));
+                    this.txtDonGiaDV.setText(String.valueOf(rowData.getDonGia()));
                 }
             });
             return row;
@@ -504,10 +497,8 @@ public class FDatTiecController implements Initializable {
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
                     DichVu rowData = row.getItem();
-                    this.txtMaDV.clear();
-                    this.txtMaDV.appendText(String.valueOf(rowData.getMaDV()));
-                    this.txtDonGiaDV.clear();
-                    this.txtDonGiaDV.appendText(String.valueOf(rowData.getDonGia()));
+                    this.txtMaDV.setText(String.valueOf(rowData.getMaDV()));
+                    this.txtDonGiaDV.setText(String.valueOf(rowData.getDonGia()));
                 }
             });
             return row;
@@ -541,12 +532,10 @@ public class FDatTiecController implements Initializable {
         DatDichVuServices s = new DatDichVuServices();
         try{
                 s.addDatDichVu(d);
-                this.txtTongSoDV.clear();
-                this.txtTongSoDV.appendText(Integer.toString(s.getTongDichVu(maTiec)));
+                this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
                 this.txtMaDV.clear();
                 this.txtDonGiaDV.clear();
-                this.txtThanhTienDV.clear();
-                this.txtThanhTienDV.appendText(s.getThanhTienDichVu(maTiec).toString());
+                this.txtThanhTienDV.setText(s.getThanhTienDichVu(maTiec).toString());
                 this.loadTvDichVuDatData(maTiec);
                 Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
             }catch(SQLException ex){
@@ -566,12 +555,10 @@ public class FDatTiecController implements Initializable {
         DatDichVuServices s = new DatDichVuServices();
         try{
                 s.xoaDatDichVu(d);
-                this.txtTongSoDV.clear();
-                this.txtTongSoDV.appendText(Integer.toString(s.getTongDichVu(maTiec)));
+                this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
                 this.txtMaDV.clear();
                 this.txtDonGiaDV.clear();
-                this.txtThanhTienDV.clear();
-                this.txtThanhTienDV.appendText(s.getThanhTienDichVu(maTiec).toString());
+                this.txtThanhTienDV.setText(s.getThanhTienDichVu(maTiec).toString());
                 this.loadTvDichVuDatData(maTiec);
                 Utils.getBox("Xóa thành công!", Alert.AlertType.INFORMATION).show();
             }catch(SQLException ex){
@@ -592,37 +579,25 @@ public class FDatTiecController implements Initializable {
         this.tab.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if("tab4".equals(this.tab.getSelectionModel().selectedItemProperty().get().getId()))
             try {
-                this.txtMaKHTT.clear();
-                this.txtTenKHTT.clear();
-                this.txtCMND.clear();
-                this.txtSDT.clear();
-                this.txtMaKHTT.appendText(Integer.toString(khachHang.getMaKH()));
-                this.txtTenKHTT.appendText(khachHang.getTenKH());
-                this.txtCMND.appendText(khachHang.getCMND());
-                this.txtSDT.appendText(khachHang.getSDT());
+                this.txtMaKHTT.setText(Integer.toString(khachHang.getMaKH()));
+                this.txtTenKHTT.setText(khachHang.getTenKH());
+                this.txtCMND.setText(khachHang.getCMND());
+                this.txtSDT.setText(khachHang.getSDT());
                 if(flag == true){
                     DatTiecServices ds = new DatTiecServices();
                     DatTiec d = ds.FindDatTiec(maTiec);
                     HoaDonServices hs = new HoaDonServices();
                     HoaDon h = hs.getHoaDon(maTiec);
-                    this.txtMaSanhTT.clear();
-                    this.txtSoLuongKhachTT.clear();
-                    this.txtSLBTT.clear();
-                    this.txtBuoi.clear();
-                    this.txtNgayDatTT.clear();
-                    this.txtNgayToChuc.clear();
-                    this.txt_TongTien.clear();
-                    this.txtMaSanhTT.appendText(Integer.toString(d.getMaSanh()));
-                    this.txtSoLuongKhachTT.appendText(Integer.toString(d.getSoLuongKhach()));
-                    this.txtSLBTT.appendText(Integer.toString(d.getSoLuongBan()));
-                    this.txtBuoi.appendText(d.getBuoi());
+                    this.txtMaSanhTT.setText(Integer.toString(d.getMaSanh()));
+                    this.txtSoLuongKhachTT.setText(Integer.toString(d.getSoLuongKhach()));
+                    this.txtSLBTT.setText(Integer.toString(d.getSoLuongBan()));
+                    this.txtBuoi.setText(d.getBuoi());
                     SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-                    this.txtNgayDatTT.appendText(date.format(d.getNgayDat()));
-                    this.txtNgayToChuc.appendText(date.format(d.getNgayToChuc()));
-                    this.txt_TongTien.appendText(h.getThanhTien().toString());
+                    this.txtNgayDatTT.setText(date.format(d.getNgayDat()));
+                    this.txtNgayToChuc.setText(date.format(d.getNgayToChuc()));
+                    this.txt_TongTien.setText(h.getThanhTien().toString());
                     this.loadTvDatMonAnTTData(maTiec);
-                    this.loadTvDichVuDatDataTT(maTiec);
-                    
+                    this.loadTvDichVuDatDataTT(maTiec);     
                 }
                 
             } catch (SQLException ex) {
@@ -687,4 +662,8 @@ public class FDatTiecController implements Initializable {
     public void setKhachHang(KhachHang khachHang) {
         this.khachHang = khachHang;
     }
+
+    /**
+     * @return the maKH
+     */
 }
