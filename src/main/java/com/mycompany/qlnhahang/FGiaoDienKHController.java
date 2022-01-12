@@ -5,7 +5,6 @@
  */
 package com.mycompany.qlnhahang;
 
-import com.mycompany.conf.Utils;
 import com.mycompany.pojo.KhachHang;
 import com.mycompany.services.KhachHangServices;
 import java.io.IOException;
@@ -16,8 +15,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,26 +52,26 @@ public class FGiaoDienKHController implements Initializable {
                 Scene scene = new Scene(d);
                 FDatTiecController controller = loader.getController();
                 KhachHangServices ks = new KhachHangServices();
-                k = ks.getKhachHang(2);
+                k = ks.getKhachHangByAccount("anhminh", "123", "KH");
                 controller.LoadTabDatTiec(k);
                 stage.setScene(scene);
-                stage.setOnCloseRequest((eh)->{
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Xác nhận");
-                    alert.setContentText("Bạn chưa thanh toán!\nVui lòng thanh toán nếu không tiệc sẽ bị hủy!");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if(result.get() == ButtonType.OK){
-                        try {
-                            controller.huyTiec();
-                        } catch (SQLException ex) {
-                            Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    else
-                        eh.consume();
-            });
+//                stage.setOnCloseRequest((eh)->{
+//                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert.setTitle("Xác nhận");
+//                    alert.setContentText("Bạn chưa thanh toán!\nVui lòng thanh toán nếu không tiệc sẽ bị hủy!");
+//                    Optional<ButtonType> result = alert.showAndWait();
+//                    if(result.get() == ButtonType.OK){
+//                        try {
+//                            controller.huyTiec();
+//                        } catch (SQLException ex) {
+//                            Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
+//                        } catch (ParseException ex) {
+//                            Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                    else
+//                        eh.consume();
+//            });
             } catch (IOException ex) {
                 Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -112,5 +109,6 @@ public class FGiaoDienKHController implements Initializable {
     public void setK(KhachHang k) {
         this.k = k;
     }
+    
 }
 

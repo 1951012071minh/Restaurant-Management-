@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -50,7 +51,7 @@
                      </children>
                   </VBox>
                   <Text id="lbl_DanhSachSanhCuoi" layoutX="8.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách sảnh cưới" />
-                  <TextField id="txt_DanhSachSanhCuoi" fx:id="txtTimKiemSanh" layoutX="124.0" layoutY="219.0" prefHeight="26.0" prefWidth="569.0" />
+                  <TextField id="txt_DanhSachSanhCuoi" fx:id="txtTimKiemSanh" layoutX="124.0" layoutY="219.0" prefHeight="26.0" prefWidth="430.0" />
                   <VBox layoutX="478.0" layoutY="33.0" prefHeight="174.0" prefWidth="84.0" spacing="18.0">
                      <children>
                         <Text id="lbl_MaSanhCuoi" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã sảnh cưới" />
@@ -87,11 +88,12 @@
                               <Font size="15.0" />
                            </font>
                         </Button>
-                        <Button id="btn_CapNhat" layoutX="14.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateDatTiecHandler" prefWidth="100.0" text="Qu" textFill="RED">
+                        <Button id="btn_CapNhat" layoutX="14.0" layoutY="486.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Button>
+                        <RadioButton fx:id="rdSanh" layoutX="562.0" layoutY="223.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="127.0" text="Hiển thị sảnh trống" />
                </children>
             </AnchorPane>
         </content>

@@ -155,7 +155,7 @@
                      </children>
                   </VBox>
                   <Button layoutX="444.0" layoutY="123.0" mnemonicParsing="false" onAction="#clickThemSanh" prefHeight="26.0" prefWidth="70.0" text="Thêm" />
-                  <Button id="btn_CapNhat" layoutX="538.0" layoutY="123.0" mnemonicParsing="false" onAction="#updateDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
+                  <Button id="btn_CapNhat" layoutX="538.0" layoutY="123.0" mnemonicParsing="false" onAction="#updateSanhHandler" prefHeight="26.0" prefWidth="70.0" text="Cập nhật" />
                   <Button id="btn_Xoa" layoutX="622.0" layoutY="123.0" mnemonicParsing="false" onAction="#deleteDichVuHandler" prefHeight="26.0" prefWidth="70.0" text="Xoá" />
                   <Text layoutX="14.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách các sảnh" />
                   <TextField id="txt_DSSanh" fx:id="txt_TimKiemSanh" layoutX="140.0" layoutY="175.0" prefHeight="26.0" prefWidth="606.0" />
