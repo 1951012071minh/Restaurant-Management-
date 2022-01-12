@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,7 +39,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -46,6 +49,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 //import //.Context;
 /**
  * FXML Controller class
@@ -70,6 +74,7 @@ public class FDatTiecController implements Initializable {
     @FXML private TextField txtTang;
     @FXML private ComboBox cbBuoi;
     @FXML private DatePicker dpNgayDat;
+    @FXML private RadioButton rdSanh;
 
     //tabDatMon
     @FXML private TableView<MonAn> tvThucAn;
@@ -148,11 +153,23 @@ public class FDatTiecController implements Initializable {
         this.tvSanh.getColumns().addAll(colMaSanh, colTenSanh, colTang, colSucChua, colDonGia);
     }
     
-    private void loadTvSanhData(String kw) throws SQLException{
-        SanhServices s = new SanhServices();
-        this.tvSanh.setItems(FXCollections.observableList(s.getListSanh(kw)));
+    private void loadTvSanhData() throws SQLException{
+        SanhServices a1 = new SanhServices();
+        if(!rdSanh.isSelected()){
+                try {
+                    this.tvSanh.setItems(FXCollections.observableList(a1.getListSanh(this.txtTimKiemSanh.getText())));
+                } catch (SQLException ex) {
+                    Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+                try { 
+                    this.tvSanh.setItems(FXCollections.observableList(a1.getListSanhByDate(this.txtTimKiemSanh.getText(), java.sql.Date.valueOf(dpNgayDat.getValue()), (String) cbBuoi.getValue()))); 
+                } catch (SQLException ex) {
+                    Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
     }
-  
+    
     private void MouseClickTvSanh(){
         tvSanh.setRowFactory((tv) -> {
             TableRow<Sanh> row = new TableRow<>();
@@ -177,7 +194,23 @@ public class FDatTiecController implements Initializable {
         this.txtMaKH.setText(Integer.toString(khachHang.getMaKH()));
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = new java.util.Date();
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())){
+                            setDisable(true);
+                            setStyle("-fx-background-color: #EEEEEE;");
+                        }
+                    }
+                };
+            }
+        };
         this.txtNgayDat.setText(d.format(date));
+        this.dpNgayDat.setDayCellFactory(dayCellFactory);
         this.dpNgayDat.setValue(LocalDate.now());
         this.maTiec = s.getMaxDatTiec();
         this.txtMaTiec.setText(Integer.toString(maTiec));
@@ -187,18 +220,38 @@ public class FDatTiecController implements Initializable {
         this.loadTvSanhView();
         this.MouseClickTvSanh();
         try {
-            this.loadTvSanhData(null);     
+            this.loadTvSanhData();
         } catch (SQLException ex) {
             Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.txtTimKiemSanh.textProperty().addListener((evt) -> {
             try {
-                this.loadTvSanhData(this.txtTimKiemSanh.getText());
+                this.loadTvSanhData();
             } catch (SQLException ex) {
                 Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+        this.rdSanh.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) -> {
+            try {
+                this.loadTvSanhData();
+            } catch (SQLException ex) {
+                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        this.dpNgayDat.valueProperty().addListener((ov, oldValue, newValue) -> {
+            try {
+                this.loadTvSanhData();
+            } catch (SQLException ex) {
+                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        this.cbBuoi.valueProperty().addListener((cl)->{
+            try {
+                this.loadTvSanhData();
+            } catch (SQLException ex) {
+                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     public void addDatTiecHandler(ActionEvent event) throws SQLException, ParseException{
