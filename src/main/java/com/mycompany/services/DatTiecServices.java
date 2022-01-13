@@ -8,6 +8,7 @@ package com.mycompany.services;
 import com.mycompany.conf.JdbcUtils;
 import com.mycompany.conf.Utils;
 import com.mycompany.pojo.DatTiec;
+import com.mycompany.pojo.Sanh;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -33,6 +34,7 @@ public class DatTiecServices {
         }
         return maxID + 1;
     }
+
 
     public int addDatTiec(DatTiec d) throws SQLException{
         try(Connection conn = JdbcUtils.getConn()){
@@ -123,7 +125,7 @@ public class DatTiecServices {
         }
         return l;
     }
-    public List<DatTiec> getListDichVu(String kw) throws SQLException
+    public List<DatTiec> getListDatTiec(String kw) throws SQLException
     {
         List<DatTiec> datTiecs = new ArrayList<>();
         try(Connection conn = JdbcUtils.getConn()){
@@ -152,5 +154,35 @@ public class DatTiecServices {
             }
         }
         return datTiecs;
+    }
+    
+    public int checkDatTiec(int maSanh, Date d, String Buoi) throws SQLException{
+        int maTiec = 0;
+        
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "(SELECT MaTiec FROM dattiec WHERE NgayToChuc = ? AND Buoi = ? AND MaSanh = ?)";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setDate(1, (java.sql.Date) d);
+            stm.setString(2, Buoi);
+            stm.setInt(3, maSanh);;      
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                maTiec = rs.getInt(1);
+            }
+        }
+        return maTiec;
+    }
+    public int checkDatTiec(int MaKH) throws SQLException{
+        int maTiec = 0;
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "(SELECT MaTiec FROM dattiec WHERE NgayToChuc > curdate() AND MaKH = ?)";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, MaKH);;      
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                maTiec = rs.getInt(1);
+            }
+        }
+        return maTiec;
     }
 }

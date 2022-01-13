@@ -337,7 +337,7 @@ public class FQuanLyController implements Initializable {
     }
     private void loadTvDatTiecData(String ma) throws SQLException{
         DatTiecServices s = new DatTiecServices();
-        this.tvDatTiec.setItems(FXCollections.observableList(s.getListDichVu(ma)));
+        this.tvDatTiec.setItems(FXCollections.observableList(s.getListDatTiec(ma)));
     }
     private void loadTvHoaDonData(Date d1, Date d2) throws SQLException{
         HoaDonServices s = new HoaDonServices();

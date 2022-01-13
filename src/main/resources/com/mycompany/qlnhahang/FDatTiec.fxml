@@ -22,6 +22,11 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
+                        <Button id="btn_CapNhat" layoutX="14.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnQuayLai" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                         <TextArea layoutX="470.0" layoutY="9.0" prefHeight="203.0" prefWidth="222.0" text="Thông tin sảnh cưới" />
                   <VBox layoutX="112.0" layoutY="27.0" prefHeight="142.0" prefWidth="127.0" spacing="10.0">
                      <children>
@@ -88,11 +93,6 @@
                               <Font size="15.0" />
                            </font>
                         </Button>
-                        <Button id="btn_CapNhat" layoutX="14.0" layoutY="486.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
                         <RadioButton fx:id="rdSanh" layoutX="562.0" layoutY="223.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="127.0" text="Hiển thị sảnh trống" />
                </children>
             </AnchorPane>
@@ -131,8 +131,13 @@
                      </font>
                   </Button>
                   <TextField id="txt_DanhSachDichVu" fx:id="txtTimKiemDV" layoutX="111.0" layoutY="235.0" prefHeight="26.0" prefWidth="578.0" />
-                  <TableView fx:id="tvDichVu" layoutX="7.0" layoutY="264.0" prefHeight="252.0" prefWidth="686.0" />
+                  <TableView fx:id="tvDichVu" layoutX="7.0" layoutY="264.0" prefHeight="221.0" prefWidth="686.0" />
                         <TableView fx:id="tvDichVuDat" layoutX="289.0" layoutY="30.0" prefHeight="159.0" prefWidth="401.0" />
+                        <Button id="btn_CapNhat" layoutX="6.0" layoutY="492.0" mnemonicParsing="false" onAction="#btnQuayLai" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -174,8 +179,13 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="tvThucAn" layoutX="7.0" layoutY="256.0" prefHeight="269.0" prefWidth="686.0" />
+                  <TableView fx:id="tvThucAn" layoutX="7.0" layoutY="256.0" prefHeight="230.0" prefWidth="686.0" />
                         <TableView fx:id="tvDatMonAn" layoutX="289.0" layoutY="30.0" prefHeight="135.0" prefWidth="409.0" />
+                        <Button id="btn_CapNhat" layoutX="5.0" layoutY="494.0" mnemonicParsing="false" onAction="#btnQuayLai" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                </children>
             </AnchorPane>
          </content>
@@ -237,14 +247,14 @@
                      </children>
                   </VBox>
                   <Text id="lbl_DanhSachSanhCuoi" layoutX="15.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách dịch vụ" />
-                  <Button id="btn_XacNhan" layoutX="597.0" layoutY="502.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xác nhận" textFill="RED">
+                  <Button id="btn_XacNhan" layoutX="586.0" layoutY="493.0" mnemonicParsing="false" onAction="#btnThanhToan" prefHeight="31.0" prefWidth="103.0" text="Xác nhận" textFill="RED">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
                   <Text id="lbl_DanhSachSanhCuoi" layoutX="365.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách món ăn" />
-                  <Text id="lbl_Buoi" layoutX="474.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng tiền" />
-                  <TextField id="txt_TongTien" fx:id="txt_TongTien" layoutX="563.0" layoutY="469.0" prefHeight="25.0" prefWidth="136.0" />
+                  <Text id="lbl_Buoi" layoutX="463.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng tiền" />
+                  <TextField id="txt_TongTien" fx:id="txt_TongTien" layoutX="552.0" layoutY="460.0" prefHeight="25.0" prefWidth="136.0" />
                   <TableView fx:id="tvDatDV" layoutX="10.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
                   <TableView fx:id="tvDatMon" layoutX="359.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
                   <Text id="lbl_ThongTinSanhDaChon" layoutX="-9.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Xác nhận thanh toán" textAlignment="CENTER" wrappingWidth="700.0000000000001">
@@ -252,6 +262,11 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
+                        <Button id="btn_CapNhat" layoutX="12.0" layoutY="493.0" mnemonicParsing="false" onAction="#btnQuayLai" prefHeight="31.0" prefWidth="101.0" text="Quay lại" textFill="RED">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                </children>
             </AnchorPane>
         </content>

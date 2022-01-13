@@ -116,6 +116,8 @@ public class SanhServices {
                 stm.setInt(4, s.getSucChua());
                 stm.setBigDecimal(5, s.getDonGia());
                 stm.executeUpdate();
+            }catch(SQLException ex){
+                
             }
         }
         public void updateSanhVaoDB(Sanh s) throws  SQLException{

@@ -21,23 +21,34 @@ import com.mycompany.services.DichVuServices;
 import com.mycompany.services.HoaDonServices;
 import com.mycompany.services.KhachHangServices;
 import com.mycompany.services.MonAnServices;
+import java.io.IOException;
 import com.mycompany.services.SanhServices;
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -45,10 +56,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.stage.Stage;
+
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 //import //.Context;
 /**
@@ -111,7 +125,7 @@ public class FDatTiecController implements Initializable {
     
     @FXML private TabPane tab;
     @FXML private Tab tab4;
-    private boolean flag = false;
+    public boolean flag = false;
     private int maTiec;
     private KhachHang khachHang;
     /**
@@ -128,7 +142,6 @@ public class FDatTiecController implements Initializable {
             Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
         }    
     }
-    
     //tabDatTiec
     private void loadTvSanhView(){
         TableColumn colMaSanh = new TableColumn("Mã sảnh");
@@ -194,24 +207,19 @@ public class FDatTiecController implements Initializable {
         this.txtMaKH.setText(Integer.toString(khachHang.getMaKH()));
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = new java.util.Date();
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+        final Callback<DatePicker, DateCell> dayCellFactory = (final DatePicker datePicker) -> new DateCell() {
             @Override
-            public DateCell call(final DatePicker datePicker) {
-                return new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item.isBefore(LocalDate.now())){
-                            setDisable(true);
-                            setStyle("-fx-background-color: #EEEEEE;");
-                        }
-                    }
-                };
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item.isBefore(LocalDate.now().plusDays(7))){
+                    setDisable(true);
+                    setStyle("-fx-background-color: #EEEEEE;");
+                }
             }
         };
         this.txtNgayDat.setText(d.format(date));
         this.dpNgayDat.setDayCellFactory(dayCellFactory);
-        this.dpNgayDat.setValue(LocalDate.now());
+        this.dpNgayDat.setValue(LocalDate.now().plusDays(7));
         this.maTiec = s.getMaxDatTiec();
         this.txtMaTiec.setText(Integer.toString(maTiec));
         ObservableList a =  FXCollections.observableArrayList("Sáng", "Tối");     
@@ -253,60 +261,135 @@ public class FDatTiecController implements Initializable {
             }
         });
     }
-    
+    public void btnQuayLai(ActionEvent event) throws SQLException, ParseException{
+        if(flag == true){
+           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText("Bạn chưa thanh toán!");   
+            alert.setContentText("Vui lòng thanh toán nếu không tiệc sẽ bị hủy!\nBạn có muốn tiếp tục?");
+            Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == ButtonType.OK){
+                    this.huyTiec();
+                }
+                else{
+                    return;
+                }
+            }
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("FGiaoDienKH.fxml"));
+            try {
+                Parent d = loader.load();
+                Scene scene = new Scene(d);
+                FGiaoDienKHController controller = loader.getController();
+                controller.setK(this.khachHang);
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }        
+    public void btnThanhToan(ActionEvent event) throws SQLException, ParseException{
+        if(flag == true){
+            HoaDonServices h = new HoaDonServices();
+            h.thanhToanHoaDon(maTiec);
+            Utils.getBox("Cám ơn quý khách đã đặt tiệc!", Alert.AlertType.INFORMATION).show();
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("FGiaoDienKH.fxml"));
+            try {
+                Parent d = loader.load();
+                Scene scene = new Scene(d);
+                FGiaoDienKHController controller = loader.getController();
+                controller.setK(this.khachHang);
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            Utils.getBox("Bạn vui lòng điền thông tin đặt tiệc!", Alert.AlertType.INFORMATION).show();
+        }
+    }
     public void addDatTiecHandler(ActionEvent event) throws SQLException, ParseException{
         try{
             DatTiec d = new DatTiec();
             d.setMaTiec(maTiec);
             d.setMaKH(khachHang.getMaKH());
             d.setTenTiec(this.txtTenTiec.getText());
+            if(txtMaSanh.getText().trim().equals(""))
+                throw new Exception("Vui lòng chọn 1 sảnh");
+            if(this.txtSoLuongKhach.getText().trim().equals("") 
+                    || this.txtSoBan.getText().trim().equals("") 
+                    ||this.txtTenTiec.getText().trim().equals(""))
+                throw new Exception("Vui lòng điền đầy đủ thông tin");
+            if(parseInt(txtSoLuongKhach.getText()) <= 0 || parseInt(txtSoBan.getText()) <= 0 )
+                    throw new NumberFormatException();
             d.setSoLuongKhach(parseInt(this.txtSoLuongKhach.getText()));
             d.setSoLuongBan(parseInt(this.txtSoBan.getText()));
             d.setBuoi((String) cbBuoi.getValue());
             d.setMaSanh(parseInt(this.txtMaSanh.getText()));
             d.setNgayToChuc(java.sql.Date.valueOf(dpNgayDat.getValue()));
-            
-            HoaDon h = new HoaDon();
             DatTiecServices s = new DatTiecServices();
-            HoaDonServices hs = new HoaDonServices();
-            h.setMaHD(hs.getMaxHoaDon());
-            h.setMaTiec(maTiec);
-            try{
-                s.addDatTiec(d);
-                hs.addHoaDon(h);
-                flag = true;
-                Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Tiệc đã được thêm!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }   
+            if(s.checkDatTiec(d.getMaSanh(), (Date) d.getNgayToChuc(), d.getBuoi()) == 0 || 
+                    s.checkDatTiec(d.getMaSanh(), (Date) d.getNgayToChuc(), d.getBuoi()) == maTiec){
+                if(parseInt(this.txtSoLuongKhach.getText()) > parseInt(this.txtSucChua.getText())){
+                    throw new Exception("Số lượng khách không được vượt quá sức chứa!");
+                }
+                HoaDon h = new HoaDon();
+                HoaDonServices hs = new HoaDonServices();
+                h.setMaHD(hs.getMaxHoaDon());
+                h.setMaTiec(maTiec);
+                try{
+                    s.addDatTiec(d);
+                    hs.addHoaDon(h);
+                    flag = true;
+                    Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
+                }catch(SQLException ex){
+                    this.updateDatTiecHandler(event);
+                }
+            }
+            else{
+                Utils.getBox("Vào khung giờ này sảnh đã có người đặt!", Alert.AlertType.INFORMATION).show();
+            }
         }catch(NumberFormatException ex){
             Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+        }catch(Exception ex){
+            Utils.getBox(ex.getMessage(), Alert.AlertType.INFORMATION).show();
         }
     }
     
     public void updateDatTiecHandler(ActionEvent event) throws SQLException, ParseException{
-        try{
-            DatTiec d = new DatTiec();
-            d.setMaTiec(maTiec);
-            d.setMaKH(khachHang.getMaKH());
-            d.setTenTiec(this.txtTenTiec.getText());
-            d.setSoLuongKhach(parseInt(this.txtSoLuongKhach.getText()));
-            d.setSoLuongBan(parseInt(this.txtSoBan.getText()));
-            d.setBuoi((String) cbBuoi.getValue());
-            d.setMaSanh(parseInt(this.txtMaSanh.getText()));
-            d.setNgayToChuc(java.sql.Date.valueOf(dpNgayDat.getValue()));
-            
-            DatTiecServices s = new DatTiecServices();
+        if(flag == true){
             try{
-                s.updateDatTiec(d);
-                Utils.getBox("Cập nhật thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Không tìm thấy tiệc!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }   
-        }catch(NumberFormatException ex){
-            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+                DatTiec d = new DatTiec();
+                d.setMaTiec(maTiec);
+                d.setMaKH(khachHang.getMaKH());
+                d.setTenTiec(this.txtTenTiec.getText());
+                if(parseInt(txtSoLuongKhach.getText()) <= 0 || parseInt(txtSoBan.getText()) <= 0 )
+                    throw new NumberFormatException();
+                d.setSoLuongKhach(parseInt(this.txtSoLuongKhach.getText()));
+                d.setSoLuongBan(parseInt(this.txtSoBan.getText()));
+                d.setBuoi((String) cbBuoi.getValue());
+                d.setMaSanh(parseInt(this.txtMaSanh.getText()));
+                d.setNgayToChuc(java.sql.Date.valueOf(dpNgayDat.getValue()));
+                DatTiecServices s = new DatTiecServices();
+                if(s.checkDatTiec(d.getMaSanh(), (Date) d.getNgayToChuc(), d.getBuoi()) == 0 
+                        || s.checkDatTiec(d.getMaSanh(), (Date) d.getNgayToChuc(), d.getBuoi()) == maTiec )
+                    try{
+                        s.updateDatTiec(d);
+                        Utils.getBox("Cập nhật thành công!", Alert.AlertType.INFORMATION).show();
+                    }catch(SQLException ex){
+                        Utils.getBox("Không tìm thấy tiệc!", Alert.AlertType.INFORMATION).show();
+                        Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                else{
+                    Utils.getBox("Vào khung giờ này sảnh đã có người đặt!", Alert.AlertType.INFORMATION).show();
+                }
+            }catch(NumberFormatException ex){
+                Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+            }
+        }
+        else{
+            Utils.getBox("Vui lòng đặt tiệc trước!", Alert.AlertType.INFORMATION).show();
         }
     }
     
@@ -374,10 +457,8 @@ public class FDatTiecController implements Initializable {
             TableRow<DatMonAn> row = new TableRow<>();
             row.setOnMouseClicked((event) -> {
                 if(event.getClickCount() != 0 && (!row.isEmpty())){
-                    DatMonAn rowData = row.getItem();
-                    //this.txtMaMA.clear();
+                    DatMonAn rowData = row.getItem();;
                     this.txtMaMA.setText(String.valueOf(rowData.getMaMA()));
-                    this.txtSoLuong.clear();
                     this.txtSoLuong.setText(String.valueOf(rowData.getSoLuong()));
                 }
             });
@@ -411,73 +492,85 @@ public class FDatTiecController implements Initializable {
     }
     
     public void addMonAnHandler(ActionEvent event) throws SQLException, ParseException{
-        try{
-        DatMonAn d = new DatMonAn();
-        d.setMaMA(parseInt(txtMaMA.getText()));
-        d.setMaTiec(maTiec);
-        d.setSoLuong(parseInt(txtSoLuong.getText()));
-        DatMonAnServices s = new DatMonAnServices();
-        try{
-                s.addDatMonAn(d);
-                this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
-                this.txtMaMA.clear();
-                this.txtSoLuong.clear();
-                this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
-                this.loadTvDatMonAnData(maTiec);
-                Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Món ăn đã được thêm!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-        }catch(NumberFormatException ex){
-            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+        if(flag == true){
+            try{
+                DatMonAn d = new DatMonAn();
+                d.setMaMA(parseInt(txtMaMA.getText()));
+                d.setMaTiec(maTiec);
+                if(parseInt(txtSoLuong.getText()) <= 0){
+                    throw new NumberFormatException();
+                }
+                d.setSoLuong(parseInt(txtSoLuong.getText()));
+                DatMonAnServices s = new DatMonAnServices();
+                if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() == 0){
+                    s.addDatMonAn(d);
+                    this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
+                    this.txtMaMA.clear();
+                    this.txtSoLuong.clear();
+                    this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
+                    this.loadTvDatMonAnData(maTiec);
+                    Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
+                }
+                else
+                  Utils.getBox("Món ăn đã có trong thực đơn của bạn!", Alert.AlertType.INFORMATION).show(); 
+            }catch(NumberFormatException ex){
+                Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+            }     
+        }
+        else{
+            Utils.getBox("Vui lòng điền thông tin đặt tiệc trước!", Alert.AlertType.INFORMATION).show();
         }
     }
     
     public void xoaMonAnHandler(ActionEvent event) throws SQLException, ParseException{
         try{
-        DatMonAn d = new DatMonAn();
-        d.setMaMA(parseInt(txtMaMA.getText()));
-        d.setMaTiec(maTiec);
-        DatMonAnServices s = new DatMonAnServices();
-        try{
-                s.xoaDatMonAn(d);
-                this.txtTongSoMA.clear();
-                this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
-                this.txtMaMA.clear();
-                this.txtSoLuong.clear();
-                this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
-                this.loadTvDatMonAnData(maTiec);
-                Utils.getBox("Xóa thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Vui lòng chọn 1 món để xóa!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
+            DatMonAnServices s = new DatMonAnServices();
+            DatMonAn d = new DatMonAn();
+            d.setMaMA(parseInt(txtMaMA.getText()));
+            d.setMaTiec(maTiec);
+            if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() != 0){
+                        s.xoaDatMonAn(d);
+                        this.txtTongSoMA.clear();
+                        this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
+                        this.txtMaMA.clear();
+                        this.txtSoLuong.clear();
+                        this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
+                        this.loadTvDatMonAnData(maTiec);
+                        Utils.getBox("Xóa thành công!", Alert.AlertType.INFORMATION).show();
+            }
+            else{
+                Utils.getBox("Món ăn này không nằm trong thực đơn của bạn!", Alert.AlertType.INFORMATION).show();
+            }
         }catch(NumberFormatException ex){
-            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+            Utils.getBox("Vui lòng chọn 1 món để xóa!", Alert.AlertType.INFORMATION).show();
         }
     }
     
     public void updateMonAnHandler(ActionEvent event) throws SQLException, ParseException{
         try{
-        DatMonAn d = new DatMonAn();
-        d.setMaMA(parseInt(txtMaMA.getText()));
-        d.setMaTiec(maTiec);
-        d.setSoLuong(parseInt(txtSoLuong.getText()));
-        DatMonAnServices s = new DatMonAnServices();
-        try{
+            DatMonAn d = new DatMonAn();
+            if("".equals(txtMaMA.getText().trim()))
+                throw new Exception("Vui lòng chọn 1 món để cập nhật");
+            d.setMaMA(parseInt(txtMaMA.getText()));
+            d.setMaTiec(maTiec);
+            d.setSoLuong(parseInt(txtSoLuong.getText()));
+            DatMonAnServices s = new DatMonAnServices();
+            if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() != 0){
                 s.updateDatMonAn(d);
                 this.txtMaMA.clear();
                 this.txtSoLuong.clear();
                 this.txtThanhTienMA.setText(s.getThanhTienMonAn(maTiec).toString());
                 this.loadTvDatMonAnData(maTiec);
                 Utils.getBox("Cập nhật thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Vui lòng chọn 1 món để cập nhật!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
+                }
+            else{
+                Utils.getBox("Món ăn này không nằm trong thực đơn của bạn!", Alert.AlertType.INFORMATION).show();
+            }
         }catch(NumberFormatException ex){
             Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+        }
+        catch(Exception ex){
+            Utils.getBox(ex.toString(), Alert.AlertType.INFORMATION).show();
         }
     }
     
@@ -578,25 +671,29 @@ public class FDatTiecController implements Initializable {
     }
     
     public void addDichVuHandler(ActionEvent event) throws SQLException, ParseException{
-        try{
-        DatDichVu d = new DatDichVu();
-        d.setMaDV(parseInt(txtMaDV.getText()));
-        d.setMaTiec(maTiec); 
-        DatDichVuServices s = new DatDichVuServices();
-        try{
-                s.addDatDichVu(d);
-                this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
-                this.txtMaDV.clear();
-                this.txtDonGiaDV.clear();
-                this.txtThanhTienDV.setText(s.getThanhTienDichVu(maTiec).toString());
-                this.loadTvDichVuDatData(maTiec);
-                Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Dịch vụ đã được thêm!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-        }catch(NumberFormatException ex){
-            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+        if(flag == true){
+            try{
+                DatDichVu d = new DatDichVu();
+                d.setMaDV(parseInt(txtMaDV.getText()));
+                d.setMaTiec(maTiec); 
+                DatDichVuServices s = new DatDichVuServices();
+                if(s.getDatDV(maTiec, d.getMaDV()).getMaTiec() == 0){
+                        s.addDatDichVu(d);
+                        this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
+                        this.txtMaDV.clear();
+                        this.txtDonGiaDV.clear();
+                        this.txtThanhTienDV.setText(s.getThanhTienDichVu(maTiec).toString());
+                        this.loadTvDichVuDatData(maTiec);
+                        Utils.getBox("Thêm thành công!", Alert.AlertType.INFORMATION).show();
+                }else{
+                     Utils.getBox("Dịch vụ đã có trong danh sách dịch vụ của bạn!", Alert.AlertType.INFORMATION).show();
+                }
+            }catch(NumberFormatException ex){
+            Utils.getBox("Vui lòng chọn 1 dịch vụ để xóa!", Alert.AlertType.INFORMATION).show();
+        }
+        }
+        else{
+             Utils.getBox("Vui lòng điền thông tin đặt tiệc trước!", Alert.AlertType.INFORMATION).show();
         }
     }
     
@@ -606,7 +703,7 @@ public class FDatTiecController implements Initializable {
         d.setMaDV(parseInt(txtMaDV.getText()));
         d.setMaTiec(maTiec);
         DatDichVuServices s = new DatDichVuServices();
-        try{
+        if(s.getDatDV(maTiec, d.getMaDV()).getMaTiec() != 0){
                 s.xoaDatDichVu(d);
                 this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
                 this.txtMaDV.clear();
@@ -614,12 +711,11 @@ public class FDatTiecController implements Initializable {
                 this.txtThanhTienDV.setText(s.getThanhTienDichVu(maTiec).toString());
                 this.loadTvDichVuDatData(maTiec);
                 Utils.getBox("Xóa thành công!", Alert.AlertType.INFORMATION).show();
-            }catch(SQLException ex){
-                Utils.getBox("Dịch vụ đã được xóa!", Alert.AlertType.INFORMATION).show();
-                Logger.getLogger(FDatTiecController.class.getName()).log(Level.SEVERE, null, ex);
+            }else{
+                Utils.getBox("Dịch vụ này không nằm trong danh sách dịch vụ của bạn!", Alert.AlertType.INFORMATION).show();
             }  
         }catch(NumberFormatException ex){
-            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
+            Utils.getBox("Vui lòng chọn 1 dịch vụ để xóa", Alert.AlertType.INFORMATION).show();
         }
     }
     
@@ -698,6 +794,7 @@ public class FDatTiecController implements Initializable {
         DatDichVuServices s = new DatDichVuServices();
         this.tvDatDV.setItems(FXCollections.observableList(s.getListDichVuDat(ma)));
     }
+    
     
     
     
