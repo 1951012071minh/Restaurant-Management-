@@ -109,4 +109,13 @@ public class HoaDonServices {
         }
         return d;
     }
+    public void thanhToanHoaDon(int maTiec) throws SQLException{
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "Update hoadon SET TinhTrang = ? WHERE maTiec = ? ";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, "Đã thanh toán");
+            stm.setInt(2, maTiec);
+            stm.executeUpdate(); 
+        }
+    }
 }

@@ -129,9 +129,13 @@ public class FTiecDaDatController implements Initializable {
         stage.setScene(scene);
     }
     public void huyTiecHandler(ActionEvent event) throws SQLException, ParseException{
-        DatTiecServices d = new DatTiecServices();
-        d.delDatTiec(parseInt(this.txtMaTiec.getText()));
-        this.txtMaTiec.clear();
-        this.loadTvDatTiecData(khachHang.getMaKH());
+        if(!"".equals(this.txtMaTiec.getText())){
+            DatTiecServices d = new DatTiecServices();
+            d.delDatTiec(parseInt(this.txtMaTiec.getText()));
+            this.txtMaTiec.clear();
+            this.loadTvDatTiecData(khachHang.getMaKH());
+        }
+        else
+            Utils.getBox("Vui lòng chọn 1 tiệc!", Alert.AlertType.INFORMATION).show();
     }
 }

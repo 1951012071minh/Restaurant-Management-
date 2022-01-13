@@ -86,4 +86,19 @@ public class DatDichVuServices {
         }
         return DichVus;
     }
+    public DatDichVu getDatDV(int maTiec, int maDV) throws SQLException
+    {
+        DatDichVu s = new DatDichVu();
+        try(Connection conn = JdbcUtils.getConn()){
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM datdichvu WHERE MaTiec = ? AND MaDV = ?");
+            stm.setInt(1, maTiec);
+            stm.setInt(2, maDV);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){   
+                s.setMaDV(rs.getInt("MaDV"));
+                s.setMaTiec(rs.getInt("MaTiec"));
+            }
+        }
+        return s;
+    }
 }

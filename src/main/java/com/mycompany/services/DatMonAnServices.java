@@ -6,9 +6,7 @@
 package com.mycompany.services;
 
 import com.mycompany.conf.JdbcUtils;
-import com.mycompany.pojo.DatDichVu;
 import com.mycompany.pojo.DatMonAn;
-import com.mycompany.pojo.DichVu;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -107,5 +105,22 @@ public class DatMonAnServices {
             }
         }
         return DatMonAns;
+    }
+    public DatMonAn getDatMonAn(int maTiec, int maMA) throws SQLException
+    {
+        DatMonAn s = new DatMonAn();
+        try(Connection conn = JdbcUtils.getConn()){
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM datmonan WHERE MaTiec = ? AND maMA = ?");
+            stm.setInt(1, maTiec);
+            stm.setInt(2, maMA);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){   
+                s.setMaMA(rs.getInt("MaMA"));
+                s.setMaTiec(rs.getInt("MaTiec"));
+                s.setSoLuong(rs.getInt("SoLuong"));
+                s.setThanhTien(rs.getBigDecimal("ThanhTien"));
+            }
+        }
+        return s;
     }
 }
