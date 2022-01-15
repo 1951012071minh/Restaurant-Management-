@@ -40,6 +40,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -48,6 +49,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -151,22 +153,44 @@ public class FQuanLyController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
-        this.loadTabDDT();
         try {
+            //TODO
+            this.loadTabDDT();
             this.loadTabHD();
+            this.loadTabDichVu();
+            this.loadTabMonAn();
+            this.loadTabSanh();
         } catch (SQLException ex) {
             Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.loadTabDichVu();
-        this.loadTabMonAn();
-        this.loadTabSanh();
         
 }
     public void loadTabHD() throws SQLException{
         this.loadTvHoaDonView();
         this.loadTvHoaDonData(null, null);
         this.dpFromHD.setValue(LocalDate.now());
+        final Callback<DatePicker, DateCell> dayCellFactory = (final DatePicker datePicker) -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item.isAfter(LocalDate.now())){
+                    setDisable(true);
+                    setStyle("-fx-background-color: #EEEEEE;");
+                }
+            }
+        };
+        final Callback<DatePicker, DateCell> dayCellFactory1 = (final DatePicker datePicker) -> new DateCell() {
+                @Override
+                public void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item.isBefore(dpFromHD.getValue()) || item.isAfter(LocalDate.now())){
+                        setDisable(true);
+                        setStyle("-fx-background-color: #EEEEEE;");
+                    }
+                }
+            };
+        this.dpToHD.setDayCellFactory(dayCellFactory1);
+        this.dpFromHD.setDayCellFactory(dayCellFactory);
         this.dpToHD.setValue(LocalDate.now());
         this.rbToanBoHD.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) -> {
             if(rbToanBoHD.isSelected()){
@@ -189,7 +213,8 @@ public class FQuanLyController implements Initializable {
                 loadTvHoaDonData(java.sql.Date.valueOf(dpFromHD.getValue()), java.sql.Date.valueOf(dpToHD.getValue()));
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
+            dpToHD.setDayCellFactory(dayCellFactory1);
         });
         this.dpToHD.valueProperty().addListener((ov, oldValue, newValue) -> {
             if(!rbToanBoHD.isSelected())
@@ -197,7 +222,18 @@ public class FQuanLyController implements Initializable {
                 loadTvHoaDonData(java.sql.Date.valueOf(dpFromHD.getValue()), java.sql.Date.valueOf(dpToHD.getValue()));
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
+            final Callback<DatePicker, DateCell> dayCellFactory0 = (final DatePicker datePicker) -> new DateCell() {
+                @Override
+                public void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item.isAfter(dpToHD.getValue()) || item.isAfter(LocalDate.now())){
+                        setDisable(true);
+                        setStyle("-fx-background-color: #EEEEEE;");
+                    }
+                }
+            };
+            dpFromHD.setDayCellFactory(dayCellFactory0);
         });
         tvHoaDon.setRowFactory((tv) -> {
             TableRow<HoaDon> row = new TableRow<>();
@@ -341,7 +377,7 @@ public class FQuanLyController implements Initializable {
     }
     private void loadTvHoaDonData(Date d1, Date d2) throws SQLException{
         HoaDonServices s = new HoaDonServices();
-        this.tvHoaDon.setItems(FXCollections.observableList(s.getListDichVu(d1, d2)));
+        this.tvHoaDon.setItems(FXCollections.observableList(s.getListHoaDon(d1, d2)));
         this.txtDoanhThuHD.setText(String.valueOf(s.getDoanhThu(d1, d2)));
     }
     
@@ -393,7 +429,7 @@ public class FQuanLyController implements Initializable {
                       this.txt_SucChua.appendText(String.valueOf(rowData.getSucChua()));
                       this.txt_GiaTien.clear();
                       this.txt_GiaTien.appendText(String.valueOf(rowData.getDonGia()));
-            };
+            }
         });
                   return rowSanh;
     });   

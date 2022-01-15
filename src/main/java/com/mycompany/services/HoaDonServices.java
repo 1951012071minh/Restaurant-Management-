@@ -64,7 +64,7 @@ public class HoaDonServices {
         }
         return d;
     }
-    public List<HoaDon> getListDichVu(Date d1, Date d2) throws SQLException
+    public List<HoaDon> getListHoaDon(Date d1, Date d2) throws SQLException
     {
         List<HoaDon> datTiecs = new ArrayList<>();
         try(Connection conn = JdbcUtils.getConn()){
