@@ -47,7 +47,7 @@ public class FGiaoDienKHController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         KhachHangServices ks = new KhachHangServices();
         try {
-            k = ks.getKhachHangByAccount("anhminh", "123", "KH");
+            k = ks.getKhachHangByAccount("anhminh0710", "0&@#$a!&*#!!&*#7!&*#h&@#$i!&*#m!&*#n&@#$", "KH");
         } catch (SQLException ex) {
             Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,7 +105,6 @@ public class FGiaoDienKHController implements Initializable {
                 Parent d = loader.load();
                 Scene scene = new Scene(d);
                 FTiecDaDatController controller = loader.getController();
-                k = ks.getKhachHang(1);
                 controller.LoadTabDatTiec(k);
                 stage.setScene(scene);
             } catch (IOException ex) {

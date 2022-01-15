@@ -67,11 +67,6 @@
                      </children>
                   </VBox>
                   <TableView fx:id="tvSanh" layoutX="7.0" layoutY="245.0" prefHeight="232.0" prefWidth="686.0" />
-                        <Button id="btn_CapNhat" layoutX="481.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateDatTiecHandler" prefWidth="100.0" text="Cập nhật" textFill="RED">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
                         <VBox layoutX="247.0" layoutY="33.0" prefHeight="131.0" prefWidth="97.0" spacing="18.0">
                            <children>
                               <Text id="lbl_DatTenTiec" strokeType="OUTSIDE" strokeWidth="0.0" text="Đặt tên tiệc" wrappingWidth="61.083984375" />
