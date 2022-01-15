@@ -65,7 +65,10 @@ public class MonAnServices {
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, kw);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+           if(!rs.next()){
+                return null;
+            }
+            else{
                 ma.setMaMA(rs.getInt("MaMA"));
                 ma.setTenMA(rs.getString("TenMA"));
                 ma.setDonGia(rs.getBigDecimal("DonGia"));

@@ -42,7 +42,7 @@ public class FThemThucAnController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        ObservableList obDVT = FXCollections.observableArrayList("Dĩa","Tô");
+        ObservableList obDVT = FXCollections.observableArrayList("Dĩa","Tô","Xô","Phần","Chai","Thùng");
           cb_DonViTinh.setItems(obDVT);
           cb_DonViTinh.setValue("Dĩa");
         ObservableList obLoai = FXCollections.observableArrayList("Thức ăn","Thức uống");
@@ -52,7 +52,13 @@ public class FThemThucAnController implements Initializable {
       public void addMonAnHandler (ActionEvent event) throws  SQLException, ParseException{
         MonAnServices mas = new MonAnServices();
         MonAn ma = mas.findMonAn(txt_TenMA.getText());
-        if(ma.getMaMA() == 0){
+        if(txt_TenMA.getText().trim().equals("")|| txt_DonGia.getText().trim().equals("")){
+                        Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
+            else{
+            int a = Integer.parseInt(txt_DonGia.getText());
+            if(a <= 0)
+                Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
+            else if(ma.getMaMA() == 0){
             //thêm
             ma.setMaMA(mas.getMaxMA());
             ma.setTenMA(this.txt_TenMA.getText());
@@ -63,7 +69,7 @@ public class FThemThucAnController implements Initializable {
             Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
             this.txt_TenMA.clear();
             this.txt_DonGia.clear();
-        }else{
+        }else
             //cập nhật
             if(ma.getIsDeleted() != null){
                 ma.setTenMA(this.txt_TenMA.getText());
@@ -79,5 +85,5 @@ public class FThemThucAnController implements Initializable {
             }
         }
     }   
-    
-}
+} 
+

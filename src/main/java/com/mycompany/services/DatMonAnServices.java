@@ -114,7 +114,10 @@ public class DatMonAnServices {
             stm.setInt(1, maTiec);
             stm.setInt(2, maMA);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){   
+            if(!rs.next()){
+                return null;
+            }
+            else{
                 s.setMaMA(rs.getInt("MaMA"));
                 s.setMaTiec(rs.getInt("MaTiec"));
                 s.setSoLuong(rs.getInt("SoLuong"));

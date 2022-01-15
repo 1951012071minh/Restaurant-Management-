@@ -44,12 +44,23 @@ public class FThemSanhController implements Initializable {
         // TODO
           
         
-    }
     
+       
+    }
     public void addSanhHandler (ActionEvent event) throws  SQLException, ParseException{
         SanhServices ss = new SanhServices();
         Sanh s = ss.findSanh(txt_TenSanh.getText());
-        if(s.getMaSanh() == 0){
+        
+            if(txt_TenSanh.getText().trim().equals("")|| txt_Tang.getText().trim().equals("")
+                    || txt_SucChua.getText().trim().equals("") || txt_GiaTien.getText().trim().equals("")){
+                        Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
+            else{
+            int a = Integer.parseInt(txt_Tang.getText());
+            int b = Integer.parseInt(txt_SucChua.getText());
+            int c = Integer.parseInt(txt_GiaTien.getText());
+            if(a <= 0 || b <= 0 || c <= 0)
+                Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
+            else if(s.getMaSanh() == 0){
             //thêm mới
             s.setMaSanh(ss.getMaxSanh());
             s.setTenSanh(this.txt_TenSanh.getText());
@@ -62,7 +73,7 @@ public class FThemSanhController implements Initializable {
             this.txt_Tang.clear();
             this.txt_SucChua.clear();
             this.txt_GiaTien.clear();
-        }else
+            } else
             if(s.getIsDeleted() != null){
                 // cập nhật
             s.setTenSanh(this.txt_TenSanh.getText());
@@ -81,4 +92,5 @@ public class FThemSanhController implements Initializable {
                 Utils.getBox("Sảnh đã tồn tại", Alert.AlertType.WARNING).show();
         }
     }
+}
 }

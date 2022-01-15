@@ -94,7 +94,10 @@ public class DatDichVuServices {
             stm.setInt(1, maTiec);
             stm.setInt(2, maDV);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){   
+            if(!rs.next()){
+                return null;
+            }
+            else{   
                 s.setMaDV(rs.getInt("MaDV"));
                 s.setMaTiec(rs.getInt("MaTiec"));
             }

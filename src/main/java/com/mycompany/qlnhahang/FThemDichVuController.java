@@ -8,6 +8,7 @@ package com.mycompany.qlnhahang;
 import com.mycompany.conf.Utils;
 import com.mycompany.pojo.DichVu;
 import com.mycompany.services.DichVuServices;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,30 +38,39 @@ public class FThemDichVuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    public void addDichVuHandler (ActionEvent event) throws  SQLException, ParseException{
+    public void addDichVuHandler(ActionEvent event) throws SQLException,ParseException{
         DichVuServices dvs = new DichVuServices();
-        DichVu dv = dvs.findDichVu(txt_TenDV.getText());
-        if(dv.getMaDV() == 0){
-            //thêm mới
+        DichVu dv = dvs.findDichVu(this.txt_TenDV.getText());
+        if(txt_TenDV.getText().trim().equals("")|| txt_DonGia.getText().trim().equals("")){
+                        Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
+            else{
+            int a = Integer.parseInt(txt_DonGia.getText());
+            if(a <= 0)
+                Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
+            else
+            if(dv.getMaDV() == 0){
+            //thêm
             dv.setMaDV(dvs.getMaxDV());
             dv.setTenDV(this.txt_TenDV.getText());
-            dv.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_DonGia.getText()))));
+            dv.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
             dvs.addDichVuVaoDB(dv);
             Utils.getBox("Thêm dịch vụ thành công", Alert.AlertType.INFORMATION).show();
             this.txt_TenDV.clear();
             this.txt_DonGia.clear();
-        }else {
-            //thêm khi đã xóa mềm
+            }
+            else 
+            //cập nhật
             if(dv.getIsDeleted() != null){
                 dv.setTenDV(this.txt_TenDV.getText());
-                dv.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_DonGia.getText()))));
+                dv.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
                 dvs.addDichVuVaoDBIsDeleted(dv);
-                Utils.getBox("Thêm dịch vụ thành công", Alert.AlertType.INFORMATION).show();
+                Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
                 this.txt_TenDV.clear();
                 this.txt_DonGia.clear();
-            }else {
-                Utils.getBox("Dịch vụ đã tồn tại", Alert.AlertType.WARNING).show();
+            }else{
+                Utils.getBox("Món ăn đã tồn tại", Alert.AlertType.WARNING).show();
+            }
         }
-      }
-    }
+    }        
 }
+

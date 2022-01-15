@@ -56,14 +56,17 @@ public class DichVuServices {
             return (maxDV + 1);
         }
     }
-     public DichVu findDichVu(String kw) throws SQLException{
+    public DichVu findDichVu(String kw) throws SQLException{
         DichVu d = new DichVu();
         try(Connection conn = JdbcUtils.getConn()){
             String sql = "SELECT * FROM dichvu WHERE TenDV = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, kw);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+           if(!rs.next()){
+                return null;
+            }
+            else{
                 d.setMaDV(rs.getInt("MaDV"));
                 d.setTenDV(rs.getString("TenDV"));
                 d.setDonGia(rs.getBigDecimal("DonGia"));

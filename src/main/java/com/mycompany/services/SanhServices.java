@@ -7,6 +7,7 @@ package com.mycompany.services;
 
 import com.mycompany.conf.JdbcUtils;
 import com.mycompany.pojo.Sanh;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,25 +89,7 @@ public class SanhServices {
         return (maxSanh + 1);
         }
     }
-      
-    public Sanh findSanh(String kw) throws SQLException{
-    Sanh s = new Sanh();
-    try(Connection conn = JdbcUtils.getConn()){
-        String sql = "SELECT * FROM Sanh WHERE TenSanh = ?";
-        PreparedStatement stm = conn.prepareStatement(sql);
-        stm.setString(1, kw);
-        ResultSet rs = stm.executeQuery();
-        while(rs.next()){
-            s.setMaSanh(rs.getInt("MaSanh"));
-            s.setTenSanh(rs.getString("TenSanh"));
-            s.setTang(rs.getInt("Tang"));
-            s.setSucChua(rs.getInt("SucChua"));
-            s.setIsDeleted(rs.getDate("isDeleted"));
-            s.setDonGia(rs.getBigDecimal("DonGia"));
-        }
-    }
-    return s;
-    }
+    
     public void addSanhVaoDB(Sanh s) throws  SQLException{
         try(Connection conn = JdbcUtils.getConn()){
             PreparedStatement stm= conn.prepareStatement("INSERT INTO  Sanh(MaSanh, TenSanh,Tang,SucChua,DonGia)" + "VALUES(?,?,?,?,?)");
@@ -155,5 +138,26 @@ public class SanhServices {
             stm.executeUpdate();
         }
     }
-
+      
+    public Sanh findSanh(String kw) throws SQLException{
+        Sanh s = new Sanh();
+        try(Connection conn = JdbcUtils.getConn()){
+            String sql = "SELECT * FROM Sanh WHERE TenSanh = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, kw);
+            ResultSet rs = stm.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            else{
+                s.setMaSanh(rs.getInt("MaSanh"));
+                s.setTenSanh(rs.getString("TenSanh"));
+                s.setTang(rs.getInt("Tang"));
+                s.setSucChua(rs.getInt("SucChua"));
+                s.setIsDeleted(rs.getDate("isDeleted"));
+                s.setDonGia(rs.getBigDecimal("DonGia"));
+            }
+        }
+        return s;
+    }
 }

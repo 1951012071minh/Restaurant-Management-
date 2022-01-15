@@ -10,52 +10,65 @@ package com.mycompany.pojo;
  * @author ANHMINH
  */
 public class BoPhan {
-    private int maBoPhan;
-    private String tenBoPhan;
-    private int soLuong;
-    public BoPhan() {
-        
+    private int MaBP;
+    private String TenBP;
+    private int SoLuongNV;
+    public BoPhan(){
+    
+    }
+
+    @Override
+    public String toString() {
+        return this.TenBP;
+    }
+
+    
+    public BoPhan(int MaBP, String TenBP, int SoLuongNV) {
+        this.MaBP = MaBP;
+        this.TenBP = TenBP;
+        this.SoLuongNV = SoLuongNV;
     }
 
     /**
-     * @return the maBoPhan
+     * @return the MaBP
      */
-    public int getMaBoPhan() {
-        return maBoPhan;
+    public int getMaBP() {
+        return MaBP;
     }
 
     /**
-     * @param maBoPhan the maBoPhan to set
+     * @param MaBP the MaBP to set
      */
-    public void setMaBoPhan(int maBoPhan) {
-        this.maBoPhan = maBoPhan;
+    public void setMaBP(int MaBP) {
+        this.MaBP = MaBP;
     }
 
     /**
-     * @return the tenBoPhan
+     * @return the TenBP
      */
-    public String getTenBoPhan() {
-        return tenBoPhan;
+    public String getTenBP() {
+        return TenBP;
     }
 
     /**
-     * @param tenBoPhan the tenBoPhan to set
+     * @param TenBP the TenBP to set
      */
-    public void setTenBoPhan(String tenBoPhan) {
-        this.tenBoPhan = tenBoPhan;
+    public void setTenBP(String TenBP) {
+        this.TenBP = TenBP;
     }
 
     /**
-     * @return the soLuong
+     * @return the SoLuongNV
      */
-    public int getSoLuong() {
-        return soLuong;
+    public int getSoLuongNV() {
+        return SoLuongNV;
     }
 
     /**
-     * @param soLuong the soLuong to set
+     * @param SoLuongNV the SoLuongNV to set
      */
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setSoLuongNV(int SoLuongNV) {
+        this.SoLuongNV = SoLuongNV;
     }
+    
 }

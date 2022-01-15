@@ -11,18 +11,16 @@
    <children>
       <VBox layoutX="22.0" layoutY="26.0" prefHeight="112.0" prefWidth="100.0" spacing="23.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã dịch vụ" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên dịch vụ" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá" />
          </children>
       </VBox>
       <VBox layoutX="122.0" layoutY="19.0" prefHeight="126.0" prefWidth="178.0" spacing="20.0">
          <children>
-            <TextField />
-            <TextField />
-            <TextField />
+            <TextField fx:id="txt_TenDV" />
+            <TextField fx:id="txt_DonGia" />
          </children>
       </VBox>
-      <Button layoutX="238.0" layoutY="145.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Thêm" />
+      <Button layoutX="238.0" layoutY="145.0" mnemonicParsing="false" onAction="#addDichVuHandler" prefHeight="26.0" prefWidth="62.0" text="Thêm" />
    </children>
 </AnchorPane>

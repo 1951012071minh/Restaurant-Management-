@@ -472,7 +472,7 @@ public class FDatTiecController implements Initializable {
                     }
                     d.setSoLuong(parseInt(txtSoLuong.getText()));
                     DatMonAnServices s = new DatMonAnServices();
-                    if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() == 0){
+                    if(s.getDatMonAn(maTiec, d.getMaMA()) == null){
                         s.addDatMonAn(d);
                         this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
                         this.txtMaMA.clear();
@@ -504,7 +504,7 @@ public class FDatTiecController implements Initializable {
                 DatMonAn d = new DatMonAn();
                 d.setMaMA(parseInt(txtMaMA.getText()));
                 d.setMaTiec(maTiec);
-                if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() != 0){
+                if(s.getDatMonAn(maTiec, d.getMaMA()) != null){
                             s.xoaDatMonAn(d);
                             this.txtTongSoMA.clear();
                             this.txtTongSoMA.setText(Integer.toString(s.getTongMonAn(maTiec)));
@@ -539,7 +539,7 @@ public class FDatTiecController implements Initializable {
                 d.setMaTiec(maTiec);
                 d.setSoLuong(parseInt(txtSoLuong.getText()));
                 DatMonAnServices s = new DatMonAnServices();
-                if(s.getDatMonAn(maTiec, d.getMaMA()).getMaMA() != 0){
+                if(s.getDatMonAn(maTiec, d.getMaMA()) != null){
                     if("".equals(txtSoLuong.getText().trim()))
                         throw new Exception("Vui lòng nhập số lượng món ăn");
                     s.updateDatMonAn(d);
@@ -667,7 +667,7 @@ public class FDatTiecController implements Initializable {
                 d.setMaDV(parseInt(txtMaDV.getText()));
                 d.setMaTiec(maTiec); 
                 DatDichVuServices s = new DatDichVuServices();
-                if(s.getDatDV(maTiec, d.getMaDV()).getMaTiec() == 0){
+                if(s.getDatDV(maTiec, d.getMaDV()) == null){
                         s.addDatDichVu(d);
                         this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
                         this.txtMaDV.clear();
@@ -694,7 +694,7 @@ public class FDatTiecController implements Initializable {
             d.setMaDV(parseInt(txtMaDV.getText()));
             d.setMaTiec(maTiec);
             DatDichVuServices s = new DatDichVuServices();
-            if(s.getDatDV(maTiec, d.getMaDV()).getMaTiec() != 0){
+            if(s.getDatDV(maTiec, d.getMaDV()) != null){
                     s.xoaDatDichVu(d);
                     this.txtTongSoDV.setText(Integer.toString(s.getTongDichVu(maTiec)));
                     this.txtMaDV.clear();

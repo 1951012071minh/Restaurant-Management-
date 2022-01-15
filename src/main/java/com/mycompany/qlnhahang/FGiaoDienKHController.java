@@ -46,11 +46,6 @@ public class FGiaoDienKHController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         KhachHangServices ks = new KhachHangServices();
-        try {
-            k = ks.getKhachHangByAccount("anhminh0710", "0&@#$a!&*#!!&*#7!&*#h&@#$i!&*#m!&*#n&@#$", "KH");
-        } catch (SQLException ex) {
-            Logger.getLogger(FGiaoDienKHController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         imgDatTiec.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             DatTiecServices ds = new DatTiecServices();
             try {
