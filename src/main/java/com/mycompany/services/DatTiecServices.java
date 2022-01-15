@@ -88,7 +88,10 @@ public class DatTiecServices {
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setInt(1, maTiec);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            if(!rs.next()){
+                return null;
+            }
+            else{
                 d.setMaTiec(rs.getInt("MaTiec"));
                 d.setMaSanh(rs.getInt("MaSanh"));
                 d.setBuoi(rs.getString("Buoi"));

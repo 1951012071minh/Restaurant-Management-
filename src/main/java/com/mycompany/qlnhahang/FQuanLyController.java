@@ -6,17 +6,22 @@
 package com.mycompany.qlnhahang;
 
 import com.mycompany.conf.Utils;
+import com.mycompany.pojo.BoPhan;
 import com.mycompany.pojo.DatTiec;
 import com.mycompany.pojo.DichVu;
 import com.mycompany.pojo.HoaDon;
 import com.mycompany.pojo.KhachHang;
 import com.mycompany.pojo.MonAn;
+import com.mycompany.pojo.NhanVien;
 import com.mycompany.pojo.Sanh;
+import com.mycompany.services.AccountServices;
+import com.mycompany.services.BoPhanServices;
 import com.mycompany.services.DatTiecServices;
 import com.mycompany.services.DichVuServices;
 import com.mycompany.services.HoaDonServices;
 import com.mycompany.services.KhachHangServices;
 import com.mycompany.services.MonAnServices;
+import com.mycompany.services.NhanVienServices;
 import com.mycompany.services.SanhServices;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
@@ -30,7 +35,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -43,6 +47,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -57,7 +62,6 @@ import javafx.util.Callback;
  * @author ANHMINH
  */
 public class FQuanLyController implements Initializable {
-    @FXML private TableView<KhachHang> tvKhachHang;
     @FXML private TextField txtMaTiecDDT;
     @FXML private TableView tvDatTiec;
     @FXML private TextField txtMaKHDDT;
@@ -107,47 +111,43 @@ public class FQuanLyController implements Initializable {
 //    @FXML private Button btn_XoaDichVu;
     @FXML private TextField txt_TimKiemDichVu;
     @FXML private TableView tbv_DanhSachDichVu;
+    
+    //BoPhan
+    @FXML private TableView<BoPhan> tvBoPhan;
+    @FXML private TextField txtMaBoPhan;
+    @FXML private TextField txtTenBoPhan;
+    @FXML private TextField txtSoLuongBP;
+    @FXML private TextField txtTimKiemBP;
+    @FXML private TableView tvNVBP;
+    //NhanVien
+    @FXML private TableView<NhanVien> tvNhanVien;
+    @FXML private TextField txtMaNhanVien;
+    @FXML private TextField txtTenNhanVien;
+    @FXML private TextField txtCMND;
+    @FXML private TextField txtSDT;
+    @FXML private TextField txtChucVu;
+    @FXML private TextField txtLuong;
+    @FXML private TextField txtMaAccount;
+    @FXML private TextField txtMaBP;
+    @FXML private TextField txtTmKiemNV;
+    @FXML private ComboBox cbTenBP_BP;
+    
+    
+    //Sang
+    @FXML private TableView<KhachHang> tvKhachHang;
+    @FXML private TextField tfMaKH_KH;
+    @FXML private TextField tfTenKH_KH;
+    @FXML private TextField tfCMND;
+    @FXML private TextField tfGT;
+    @FXML private TextField tfSDT;
+    @FXML private TextField tfDiaChi;
+    @FXML private TextField tfTimKiemKH;
    
+    
     /**
      * Initializes the controller class.
      */    
-        
-    private void LoadTvKhachHangView(){
-        
-        TableColumn colMaKH = new TableColumn("Mã khách hàng");
-        colMaKH.setCellValueFactory(new PropertyValueFactory("MaKH"));
-        colMaKH.setPrefWidth(60);  
-        
-        TableColumn colTenKH = new TableColumn("Tên khách hàng");
-        colTenKH.setCellValueFactory(new PropertyValueFactory("TenKH"));
-        colTenKH.setPrefWidth(150); 
-        
-        TableColumn colGioiTinh = new TableColumn("Giới tính");
-        colGioiTinh.setCellValueFactory(new PropertyValueFactory("GioiTinh"));
-        colGioiTinh.setPrefWidth(60);
-        
-        TableColumn colCMND = new TableColumn("CMND");
-        colCMND.setCellValueFactory(new PropertyValueFactory("CMND"));
-        colCMND.setPrefWidth(100);
-        
-        TableColumn colSDT = new TableColumn("SDT");
-        colSDT.setCellValueFactory(new PropertyValueFactory("SDT"));
-        colSDT.setPrefWidth(100);
-        
-        TableColumn colDiaChi = new TableColumn("Địa chỉ");
-        colDiaChi.setCellValueFactory(new PropertyValueFactory("DiaChi"));
-        colDiaChi.setPrefWidth(100);
-        
-        TableColumn colMaAcc = new TableColumn("Mã acc");
-        colMaAcc.setCellValueFactory(new PropertyValueFactory("MaAcc"));
-        colMaAcc.setPrefWidth(150);
-        this.tvKhachHang.getColumns().addAll(colMaKH, colTenKH, colGioiTinh,colCMND, colSDT, colDiaChi, colMaAcc);
-    }
-
-    private void LoadTvKhachHang (String kw) throws  SQLException{
-        KhachHangServices s= new KhachHangServices();
-        this.tvKhachHang.setItems(FXCollections.observableList(s.getListKhachHang(kw)));
-    }
+   
     /**
      * Initializes the controller class.
      */
@@ -160,9 +160,23 @@ public class FQuanLyController implements Initializable {
             this.loadTabDichVu();
             this.loadTabMonAn();
             this.loadTabSanh();
+            this.LoadTabKhachHang();
         } catch (SQLException ex) {
             Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //BoPhan
+        try{
+            this.LoadTabBoPhan();
+        }catch(SQLException ex){
+            Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //NhanVien
+        try{
+            this.LoadTabNhanVien();
+        }catch(SQLException ex){
+            Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.loadTvNhanVienBPView();
         
 }
     public void loadTabHD() throws SQLException{
@@ -382,8 +396,6 @@ public class FQuanLyController implements Initializable {
     }
     
     
-    
-    //LenVo
      //LenVo
     private void loadTvSanhView(){
          //Mã Sảnh
@@ -429,11 +441,12 @@ public class FQuanLyController implements Initializable {
                       this.txt_SucChua.appendText(String.valueOf(rowData.getSucChua()));
                       this.txt_GiaTien.clear();
                       this.txt_GiaTien.appendText(String.valueOf(rowData.getDonGia()));
-            }
+            };
         });
                   return rowSanh;
     });   
 }
+      
       private void loadTvThucAnView(){
 //         Mã MA
             TableColumn colMaMA = new TableColumn("Mã món ăn");
@@ -532,13 +545,13 @@ public class FQuanLyController implements Initializable {
        }
        this.txt_TimKiemSanh.textProperty().addListener((evt) -> {
             try {
-                this.loadTvSanhData(this.txt_TimKiemSanh.getText());
+                this.loadTvSanhData(this.txt_TimKiemSanh.getText().trim());
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
      }
-     private void loadTabMonAn(){
+     private void loadTabMonAn(){  
          this.loadTvThucAnView();
          this.MouseClicktbvDanhSachMonAn();
          try{
@@ -548,7 +561,7 @@ public class FQuanLyController implements Initializable {
        }
        this.txt_TimKiemMonAn.textProperty().addListener((evt) -> {
             try {
-                this.loadTvMonAnData(this.txt_TimKiemMonAn.getText());
+                this.loadTvMonAnData(this.txt_TimKiemMonAn.getText().trim());
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -564,7 +577,7 @@ public class FQuanLyController implements Initializable {
        }
        this.txt_TimKiemDichVu.textProperty().addListener((evt) -> {
             try {
-                this.loadTVDichVuData(this.txt_TimKiemDichVu.getText());
+                this.loadTVDichVuData(this.txt_TimKiemDichVu.getText().trim());
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -574,7 +587,6 @@ public class FQuanLyController implements Initializable {
      
     
      public void clickThemSanh(ActionEvent event) throws IOException, SQLException{
-//       if(findSanh() == null)
         FXMLLoader fxmlLoader= new FXMLLoader(App.class.getResource("FThemSanh.fxml"));
         Scene scene= new Scene(fxmlLoader.load());
         Stage stage= new Stage();
@@ -612,7 +624,7 @@ public class FQuanLyController implements Initializable {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NumberFormatException numberFormatException) {
-            Utils.getBox("Sai kiểu dữ liệu", Alert.AlertType.WARNING).show();
+            Utils.getBox("Sai kiểu dữ liệu hoặc chưa điền dữ liệu cần cập nhật", Alert.AlertType.WARNING).show();
         }
         this.loadTvSanhData(null);
     }
@@ -677,7 +689,7 @@ public class FQuanLyController implements Initializable {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NumberFormatException numberFormatException) {
-            Utils.getBox("Sai kiểu dữ liệu", Alert.AlertType.WARNING).show();
+            Utils.getBox("Sai kiểu dữ liệu hoặc chưa điền dữ liệu cần cập nhật", Alert.AlertType.WARNING).show();
         }
         this.loadTvMonAnData(null);
     }
@@ -703,16 +715,15 @@ public class FQuanLyController implements Initializable {
                 Utils.getBox("Xin nhập đúng kiểu dữ liệu!", Alert.AlertType.WARNING).show();
         }
     }
-     
      public void clickThemDichVu(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader= new FXMLLoader(App.class.getResource("FThemDichVu.fxml"));
-        Scene scene= new Scene(fxmlLoader.load());
-        Stage stage= new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Thêm dịch vụ");
-        stage.show();
-        stage.setOnCloseRequest((eh) -> {
-            try {
+         FXMLLoader fxml = new FXMLLoader(App.class.getResource("FThemDichVu.fxml"));
+         Scene sc = new Scene(fxml.load());
+         Stage stg = new Stage();
+         stg.setScene(sc);
+         stg.setTitle("Thêm dịch vụ");
+         stg.show();
+         stg.setOnCloseRequest((eh) ->{
+         try {
                 this.loadTVDichVuData(null);
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
@@ -737,7 +748,7 @@ public class FQuanLyController implements Initializable {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NumberFormatException numberFormatException) {
-            Utils.getBox("Sai kiểu dữ liệu", Alert.AlertType.WARNING).show();
+            Utils.getBox("Sai kiểu dữ liệu hoặc chưa điền dữ liệu cần cập nhật", Alert.AlertType.WARNING).show();
         }
         this.loadTVDichVuData(null);
     }
@@ -760,5 +771,516 @@ public class FQuanLyController implements Initializable {
             }catch(NumberFormatException e){
                 Utils.getBox("Xin nhập đúng kiểu dữ liệu!", Alert.AlertType.WARNING).show();
         }
+    }
+     
+     
+     
+     
+     //Nguyen
+      private void loadTvNhanVienView(){
+        
+        TableColumn colmaNhanVien = new TableColumn("Mã nhân viên");
+        colmaNhanVien.setCellValueFactory(new PropertyValueFactory("MaNV"));
+        colmaNhanVien.setPrefWidth(100);
+        
+        TableColumn coltenNhanVien = new TableColumn("Tên nhân viên");
+        coltenNhanVien.setCellValueFactory(new PropertyValueFactory("TenNV"));
+        coltenNhanVien.setPrefWidth(100);
+        
+        TableColumn colCMND = new TableColumn("Số CMND");
+        colCMND.setCellValueFactory(new PropertyValueFactory("CMND"));
+        colCMND.setPrefWidth(70);
+        
+        TableColumn colSDT = new TableColumn("SDT");
+        colSDT.setCellValueFactory(new PropertyValueFactory("SDT"));
+        colSDT.setPrefWidth(70);
+        
+        TableColumn colchucVu = new TableColumn("Chức vụ");
+        colchucVu.setCellValueFactory(new PropertyValueFactory("ChucVu"));
+        colchucVu.setPrefWidth(100);
+        
+        TableColumn colluong = new TableColumn("Lương");
+        colluong.setCellValueFactory(new PropertyValueFactory("Luong"));
+        colluong.setPrefWidth(100);
+        
+        TableColumn coltenBoPhan = new TableColumn("Mã bộ phận");
+        coltenBoPhan.setCellValueFactory(new PropertyValueFactory("MaBP"));
+        coltenBoPhan.setPrefWidth(100);
+        
+        TableColumn colmaAccount = new TableColumn("Mã Account");
+        colmaAccount.setCellValueFactory(new PropertyValueFactory("MaAccount"));
+        colmaAccount.setPrefWidth(100);
+        
+        this.tvNhanVien.getColumns().addAll(colmaNhanVien, coltenNhanVien, colCMND, colSDT, colchucVu, colluong, coltenBoPhan, colmaAccount);
+    }
+    
+    private void loadTvNhanVienData(String nv) throws SQLException{
+        NhanVienServices n = new NhanVienServices();
+        this.tvNhanVien.setItems(FXCollections.observableList(n.getListNhanVien(nv)));
+    }
+    
+    private void MouseClickTvNhanVien()
+    {
+        BoPhanServices Bp = new BoPhanServices();
+        tvNhanVien.setRowFactory((tv)-> {
+            TableRow<NhanVien> row = new TableRow<>();
+            row.setOnMouseClicked((event)->{
+                if(event.getClickCount()!=0 &&(!row.isEmpty())){
+                    NhanVien rowData=row.getItem();
+                    this.txtMaNhanVien.setText((String.valueOf(rowData.getMaNV())));
+                    this.txtTenNhanVien.setText((String.valueOf(rowData.getTenNV())));
+                    this.txtCMND.setText((String.valueOf(rowData.getCMND())));
+                    this.txtSDT.setText((String.valueOf(rowData.getSDT())));
+                    this.txtChucVu.setText((String.valueOf(rowData.getChucVu())));
+                    this.txtLuong.setText((String.valueOf(rowData.getLuong())));
+                    try {
+                        this.cbTenBP_BP.setValue(Bp.getBP(rowData.getMaBP()));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    this.txtMaAccount.setText((String.valueOf(rowData.getMaAccount())));
+                }
+            });
+            return row;
+        });
+    }
+    
+    private void LoadTabNhanVien() throws SQLException{
+        BoPhanServices Bp = new BoPhanServices();
+        this.cbTenBP_BP.setItems(FXCollections.observableList(Bp.getListTen()));
+        this.loadTvNhanVienView();
+        this.MouseClickTvNhanVien();
+        try {
+            this.loadTvNhanVienData(null);            
+        } catch (SQLException ex) {
+             Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         this.txtTmKiemNV.textProperty().addListener((evt)->{
+         try{
+             this.loadTvNhanVienData(this.txtTmKiemNV.getText().trim());
+         }catch(SQLException ex){
+             Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);      
+        }        
+        });
+    }
+    
+    public void deleteNhanVienHandler(ActionEvent event) throws IOException, SQLException {
+        if(!"".equals(txtMaNhanVien.getText().trim()))
+        {
+            AccountServices s = new AccountServices();
+            NhanVienServices nvs = new NhanVienServices();
+            NhanVien a = nvs.getNhanVien(parseInt(txtMaNhanVien.getText()));
+            try {
+                s.delAccount(a.getMaAccount());
+                this.loadTvBoPhanData(null);
+                this.txtMaNhanVien.clear();
+                this.txtTenNhanVien.clear();
+                this.txtSDT.clear();
+                this.txtCMND.clear();
+                this.txtChucVu.clear();
+                this.txtLuong.clear();
+                this.txtMaAccount.clear();
+                Utils.getBox("Xoá nhân viên thành công!!!", Alert.AlertType.INFORMATION).show();
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                Utils.getBox("Xoá nhân viên không thành công!!!", Alert.AlertType.WARNING).show();
+        }
+            this.loadTvNhanVienData(null);
+        }
+        else
+            Utils.getBox("Vui lòng chọn 1 nhân viên để xóa!!!", Alert.AlertType.WARNING).show();
+    }
+    
+    public void deleteBoPhanHandler(ActionEvent event) throws IOException, SQLException {
+        if(!"".equals(txtMaBoPhan.getText().trim()))
+        {
+            BoPhanServices bs = new BoPhanServices();
+            BoPhan bp = bs.getBP(parseInt(txtMaBoPhan.getText()));
+            try {
+                bs.deleteBoPhan(bp.getMaBP());
+                this.loadTvBoPhanData(null);
+                this.txtMaBoPhan.clear();                                       
+                this.txtTenBoPhan.clear();
+                this.txtSoLuongBP.clear();
+                Utils.getBox("Xoá bộ phận thành công!!!", Alert.AlertType.INFORMATION).show();
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                Utils.getBox("Xoá bộ phận không thành công!!!", Alert.AlertType.WARNING).show();
+        }
+        }
+        else
+            Utils.getBox("Vui lòng chọn 1 bộ phận để xóa!!!", Alert.AlertType.WARNING).show();
+    }
+
+    private void loadTvBoPhanView(){
+        TableColumn colmaBoPhan = new TableColumn("Mã bộ phận");
+        colmaBoPhan.setCellValueFactory(new PropertyValueFactory("MaBP"));
+        colmaBoPhan.setPrefWidth(250);
+        
+        TableColumn coltenBoPhan = new TableColumn("Tên bộ phận");
+        coltenBoPhan.setCellValueFactory(new PropertyValueFactory("TenBP"));
+        coltenBoPhan.setPrefWidth(250);
+     
+        TableColumn colsoLuong = new TableColumn("Số lượng");
+        colsoLuong.setCellValueFactory(new PropertyValueFactory("SoLuongNV"));
+        colsoLuong.setPrefWidth(250);
+        this.tvBoPhan.getColumns().addAll(colmaBoPhan, coltenBoPhan, colsoLuong);
+    }
+
+    private void loadTvBoPhanData(String bp) throws SQLException{
+        BoPhanServices s= new BoPhanServices();
+        this.tvBoPhan.setItems(FXCollections.observableList(s.getListBoPhan(bp)));
+    }
+    
+    private void LoadTabBoPhan() throws SQLException{
+        this.loadTvBoPhanView();
+        this.MouseClickTvBoPhan();
+            try {
+                this.loadTvBoPhanData(null);            
+            } catch (SQLException ex) {
+                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+             this.txtTimKiemBP.textProperty().addListener((evt) -> {
+             try{
+                 this.loadTvBoPhanData(this.txtTimKiemBP.getText().trim());
+             }catch(Exception ex){
+                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);      
+            }        
+        });
+    }
+    
+    private void MouseClickTvBoPhan(){
+        tvBoPhan.setRowFactory((tv)-> {
+            TableRow<BoPhan> row =new TableRow<>();
+            row.setOnMouseClicked((event)->{
+                if(event.getClickCount()!=0 &&(!row.isEmpty())){
+                    BoPhan rowData=row.getItem();
+                    this.txtMaBoPhan.clear();                                       
+                    this.txtTenBoPhan.clear();
+                    this.txtSoLuongBP.clear();
+                    this.txtMaBoPhan.appendText((String.valueOf(rowData.getMaBP())));                          
+                    this.txtTenBoPhan.appendText((String.valueOf(rowData.getTenBP())));
+                    this.txtSoLuongBP.appendText(String.valueOf(rowData.getSoLuongNV()));
+                    try {
+                        this.loadTvNVBP(rowData.getMaBP());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            return row;
+        });
+    }
+    
+    public void btnThemBoPhan(ActionEvent event)throws IOException, SQLException{
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FThemBoPhan.fxml"));
+        
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Thêm Bộ Phận");
+        stage.show();
+        stage.setOnCloseRequest((eh) -> {
+            try {
+                this.loadTvBoPhanData(null);
+                this.txtMaBoPhan.clear();                                       
+                this.txtTenBoPhan.clear();
+                this.txtSoLuongBP.clear();
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        this.loadTvBoPhanData(null);
+    }
+    
+     public void btnThemNhanVien (ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FDangKyNhanVien.fxml"));
+        
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Thêm Nhân Viên");
+        stage.show();
+        stage.setOnCloseRequest((eh) -> {
+            try {
+                this.loadTvNhanVienData(null);
+                this.loadTvBoPhanData(null);
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+     
+     public void updateNhanVienHandler(ActionEvent event) throws SQLException, ParseException{
+         BoPhanServices Bp = new BoPhanServices();
+         if(!(txtTenNhanVien.getText().trim().equals("")||txtSDT.getText().trim().equals("")||txtCMND.getText().trim().equals("")||txtChucVu.getText().trim().equals("")||txtLuong.getText().trim().equals("")||
+              txtMaAccount.getText().trim().equals(""))){
+             try{
+             NhanVien nv = new NhanVien();
+             NhanVienServices ns = new NhanVienServices();
+             nv.setMaNV(parseInt(this.txtMaNhanVien.getText()));
+             nv.setTenNV(this.txtTenNhanVien.getText());
+             nv.setSDT(this.txtSDT.getText());
+             nv.setCMND(this.txtCMND.getText());
+             nv.setMaBP(Bp.getBP(this.cbTenBP_BP.getValue().toString()).getMaBP());
+             nv.setChucVu(this.txtChucVu.getText());
+             nv.setLuong(BigDecimal.valueOf((parseInt(this.txtLuong.getText()))));
+             nv.setMaAccount(parseInt(this.txtMaAccount.getText()));
+             ns.updateNhanVien(nv);
+                 this.loadTvBoPhanData(null);
+                 this.txtMaNhanVien.clear();
+                 this.txtTenNhanVien.clear();
+                 this.txtSDT.clear();
+                 this.txtCMND.clear();
+                 this.txtChucVu.clear();
+                 this.txtLuong.clear();
+                 this.txtMaAccount.clear();
+                 Utils.getBox("Cập nhật nhân viên thành công", Alert.AlertType.INFORMATION).show();
+                 this.loadTvNhanVienData(null);
+             
+         }catch(NumberFormatException numberFormatException){
+             Utils.getBox("Kiểu dữ liệu không đúng", Alert.AlertType.WARNING).show();
+         }
+         }
+         else{
+             Utils.getBox("Chưa chọn nhân viên cần cập nhật!", Alert.AlertType.INFORMATION).show();
+         }
+         
+     }
+     
+     public void updateBoPhanHandler(ActionEvent event) throws SQLException, ParseException{
+         try{
+             BoPhan bp = new BoPhan();
+             BoPhanServices ns = new BoPhanServices();
+             bp.setMaBP(parseInt(this.txtMaBoPhan.getText()));
+             bp.setTenBP(this.txtTenBoPhan.getText());
+             bp.setSoLuongNV(parseInt(this.txtSoLuongBP.getText()));
+             try{
+                 ns.updateBoPhan(bp);
+                 this.txtMaBoPhan.clear();
+                 this.txtTenBoPhan.clear();
+                 this.txtSoLuongBP.clear();
+                 Utils.getBox("Cập nhật bộ phận thành công", Alert.AlertType.INFORMATION).show();
+             }catch(SQLException ex){
+                 Utils.getBox("Vui lòng chọn 1 bộ phận để cập nhật", Alert.AlertType.WARNING).show();
+                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         }catch(NumberFormatException numberFormatException){
+             Utils.getBox("Kiểu dữ liệu không đúng", Alert.AlertType.WARNING).show();
+         }
+         this.loadTvBoPhanData(null);
+     }
+     
+     
+     private void loadTvNVBP(int maBP) throws SQLException{
+        NhanVienServices s= new NhanVienServices();
+        this.tvNVBP.setItems(FXCollections.observableList(s.getNhanVienBP(maBP)));
+    }
+    private void loadTvNhanVienBPView(){
+        TableColumn colMaNV = new TableColumn("Mã NV");
+        colMaNV.setCellValueFactory(new PropertyValueFactory("MaNV"));
+        colMaNV.setPrefWidth(50);
+        
+        TableColumn colTenNV = new TableColumn("Tên nhân viên");
+        colTenNV.setCellValueFactory(new PropertyValueFactory("TenNV"));
+        colTenNV.setPrefWidth(170);
+        
+        TableColumn colSdt = new TableColumn("SDT");
+        colSdt.setCellValueFactory(new PropertyValueFactory("SDT"));
+        colSdt.setPrefWidth(100);
+        
+        TableColumn colCV = new TableColumn("Chức vụ");
+        colCV.setCellValueFactory(new PropertyValueFactory("ChucVu"));
+        colCV.setPrefWidth(100);
+        
+        this.tvNVBP.getColumns().addAll(colMaNV, colTenNV, colSdt, colCV);
+    }
+    
+    private void LoadTvKhachHangView(){
+        
+        TableColumn colMaKH = new TableColumn("Mã khách hàng");
+        colMaKH.setCellValueFactory(new PropertyValueFactory("MaKH"));
+        colMaKH.setPrefWidth(100);  
+        
+        TableColumn colTenKH = new TableColumn("Tên khách hàng");
+        colTenKH.setCellValueFactory(new PropertyValueFactory("TenKH"));
+        colTenKH.setPrefWidth(140); 
+        
+        TableColumn colGioiTinh = new TableColumn("Giới tính");
+        colGioiTinh.setCellValueFactory(new PropertyValueFactory("GioiTinh"));
+        colGioiTinh.setPrefWidth(70);
+        
+        TableColumn colCMND = new TableColumn("CMND");
+        colCMND.setCellValueFactory(new PropertyValueFactory("CMND"));
+        colCMND.setPrefWidth(90);
+        
+        TableColumn colSDT = new TableColumn("SDT");
+        colSDT.setCellValueFactory(new PropertyValueFactory("SDT"));
+        colSDT.setPrefWidth(90);
+        
+        TableColumn colDiaChi = new TableColumn("Địa chỉ");
+        colDiaChi.setCellValueFactory(new PropertyValueFactory("DiaChi"));
+        colDiaChi.setPrefWidth(158);
+        
+        TableColumn colMaAcc = new TableColumn("Mã Account");
+        colMaAcc.setCellValueFactory(new PropertyValueFactory("MaAcc"));
+        colMaAcc.setPrefWidth(80);
+        this.tvKhachHang.getColumns().addAll(colMaKH, colTenKH, colGioiTinh,colCMND, colSDT, colDiaChi, colMaAcc);
+        
+    }
+    
+     private void LoadTvKhachHangData (String kw) throws  SQLException{
+        KhachHangServices s= new KhachHangServices();
+        this.tvKhachHang.setItems(FXCollections.observableList(s.getListKhachHang(kw)));
+    }
+    /**
+     * Initializes the controller class.
+     */    
+        
+    
+
+    private void LoadTvKhachHang (String kw) throws  SQLException{
+        KhachHangServices s= new KhachHangServices();
+        this.tvKhachHang.setItems(FXCollections.observableList(s.getListKhachHang(kw)));
+    }
+    
+    private void MouseClickTvKhachHang()
+    {
+        tvKhachHang.setRowFactory((tv)-> {
+            TableRow<KhachHang> row =new TableRow<>();
+            row.setOnMouseClicked((event)->{
+                if(event.getClickCount()!=0 &&(!row.isEmpty())){
+                    KhachHang rowData=row.getItem();
+                    this.tfMaKH_KH.clear();                                       
+                    this.tfTenKH_KH.clear();
+                    this.tfGT.clear();
+                    this.tfSDT.clear();
+                    this.tfCMND.clear();
+                    this.tfDiaChi.clear();
+                    
+                    this.tfMaKH_KH.appendText((String.valueOf(rowData.getMaKH())));                          
+                    this.tfTenKH_KH.appendText((String.valueOf(rowData.getTenKH())));
+                    this.tfGT.appendText((String.valueOf(rowData.getGioiTinh())));
+                    this.tfCMND.appendText((String.valueOf(rowData.getCMND())));
+                    this.tfSDT.appendText((String.valueOf(rowData.getSDT())));     
+                    this.tfDiaChi.appendText((String.valueOf(rowData.getDiaChi())));                   
+                }
+            });
+            return row;
+        });
+    }
+    
+     private void LoadTabKhachHang () throws  SQLException{
+             this.LoadTvKhachHangView();
+            this.MouseClickTvKhachHang();
+            try {
+                this.LoadTvKhachHangData(null);            
+            } catch (SQLException ex) {
+                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+             this.tfTimKiemKH.textProperty().addListener((evt)->{
+             try{
+                 this.LoadTvKhachHangData(this.tfTimKiemKH.getText().trim());
+             }catch(Exception ex){
+                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);      
+            }        
+        });
+            
+            
+        }
+
+    public void btnThemKhachHang (ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader= new FXMLLoader(App.class.getResource("FDangKyKhachHang.fxml"));
+        
+        Scene scene= new Scene(fxmlLoader.load());
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Thêm Khách Hàng");
+        stage.show();
+        stage.setOnCloseRequest((eh) -> {
+            try {
+                this.LoadTvKhachHangData(null);
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+    }
+    
+
+    public void xoaKhachHang(ActionEvent event) throws SQLException{
+       KhachHangServices k = new KhachHangServices();
+       AccountServices s = new AccountServices();
+       if(!(tfGT.getText().equals("")||tfDiaChi.getText().trim().equals("")||tfTenKH_KH.getText().trim().equals("")||tfSDT.getText().trim().equals("")||tfCMND.getText().trim().equals("")))
+       {
+       KhachHang kh = k.getKhachHang(parseInt(this.tfMaKH_KH.getText()));
+       
+            
+            try {
+                    s.delAccount(kh.getMaAcc());
+                    this.tfMaKH_KH.clear();                                       
+                    this.tfTenKH_KH.clear();
+                    this.tfGT.clear();
+                    this.tfSDT.clear();
+                    this.tfCMND.clear();
+                    this.tfDiaChi.clear();
+                Utils.getBox("Xoá thành công!!!", Alert.AlertType.INFORMATION).show();
+            } catch (SQLException ex) {
+                Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
+                Utils.getBox("Xoá không thành công!!!", Alert.AlertType.WARNING).show();
+                               
+            }
+            this.LoadTvKhachHangData(null);
+    }
+       else
+       {
+               Utils.getBox("Chưa chọn khách hàng để xoá!", Alert.AlertType.WARNING).show();
+               }
+         }
+    
+ 
+
+    
+
+
+    
+   
+    
+    public void updateKhachHanHandler (ActionEvent event) throws SQLException, ParseException{
+       if(!(tfGT.getText().equals("")||tfDiaChi.getText().trim().equals("")||tfTenKH_KH.getText().trim().equals("")||tfSDT.getText().trim().equals("")||tfCMND.getText().trim().equals("")))
+       { try{
+           
+        KhachHang d = new KhachHang();
+        KhachHangServices ks=new KhachHangServices();
+        d.setMaKH(parseInt(this.tfMaKH_KH.getText()));
+        d.setGioiTinh(this.tfGT.getText());
+        d.setTenKH(this.tfTenKH_KH.getText());
+        d.setDiaChi(this.tfDiaChi.getText());
+        d.setSDT(Integer.toString(parseInt(this.tfSDT.getText())));
+        d.setCMND(Integer.toString(parseInt(this.tfCMND.getText())));        
+                ks.updateKhachhang(d);
+                
+                this.tfGT.clear();
+                this.tfTenKH_KH.clear(); 
+                this.tfDiaChi.clear();
+                this.tfSDT.clear();
+                this.tfCMND.clear();
+                this.tfMaKH_KH.clear();    
+                Utils.getBox("Cập nhật thành công!", Alert.AlertType.INFORMATION).show();
+                this.LoadTvKhachHangData(null);
+
+            
+//                Utils.getBox("Dữ liệu cập nhật chưa được thay đổi!!", Alert.AlertType.INFORMATION).show();
+               
+            
+        }catch(NumberFormatException ex){
+            Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();  
+        }}
+       else{
+           Utils.getBox("Chưa chọn khách hàng cần cập nhật!", Alert.AlertType.INFORMATION).show();
+       }
     }
 }

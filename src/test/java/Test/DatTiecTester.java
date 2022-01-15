@@ -9,6 +9,7 @@ import com.mycompany.pojo.DatDichVu;
 import com.mycompany.pojo.DatMonAn;
 import com.mycompany.pojo.DatTiec;
 import com.mycompany.pojo.HoaDon;
+import com.mycompany.services.AccountServices;
 import com.mycompany.services.DatDichVuServices;
 import com.mycompany.services.DatMonAnServices;
 import com.mycompany.services.DatTiecServices;
@@ -30,7 +31,7 @@ public class DatTiecTester {
     DatMonAnServices datMonAnSV;
     DatDichVuServices datDichVuSV;
     DichVuServices dichVuSV;
-    int maTiec = 1;
+    int maTiec = 5;
     @Test
     //Test đặt tiệc
     public void Test1() throws SQLException{
@@ -65,6 +66,7 @@ public class DatTiecTester {
         d.setSoLuong(10);
         int a = datMonAnSV.getListDatMonAn(maTiec).size();
         datMonAnSV.addDatMonAn(d);
+        Assertions.assertNotNull(datMonAnSV.getDatMonAn(maTiec, 1));
         Assertions.assertEquals(a + 1, datMonAnSV.getListDatMonAn(maTiec).size());
         Assertions.assertEquals(10, datMonAnSV.getDatMonAn(maTiec, 1).getSoLuong());
         Assertions.assertEquals(datMonAnSV.getDatMonAn(maTiec, 1).getThanhTien().add(h.getThanhTien()), hoaDonSV.getHoaDon(maTiec).getThanhTien());
@@ -89,6 +91,7 @@ public class DatTiecTester {
         int a = datMonAnSV.getListDatMonAn(maTiec).size();
         BigDecimal a1 = h.getThanhTien().subtract(d.getThanhTien());
         datMonAnSV.xoaDatMonAn(d);
+        Assertions.assertNull(datMonAnSV.getDatMonAn(maTiec, 1));
         Assertions.assertEquals(a - 1, datMonAnSV.getListDatMonAn(maTiec).size());
         Assertions.assertEquals(a1 , hoaDonSV.getHoaDon(maTiec).getThanhTien());
     }
@@ -101,6 +104,7 @@ public class DatTiecTester {
         d.setMaTiec(maTiec);
         int a = datDichVuSV.getListDichVuDat(maTiec).size();
         datDichVuSV.addDatDichVu(d);
+        Assertions.assertNotNull(datDichVuSV.getDatDV(maTiec, 1));
         Assertions.assertEquals(a + 1, datDichVuSV.getListDichVuDat(maTiec).size());
     }
     
@@ -111,6 +115,7 @@ public class DatTiecTester {
         DatDichVu d = datDichVuSV.getDatDV(maTiec, 1);
         int a = datDichVuSV.getListDichVuDat(maTiec).size();
         datDichVuSV.xoaDatDichVu(d);
+        Assertions.assertNull(datDichVuSV.getDatDV(maTiec, 1));
         Assertions.assertEquals(a - 1, datDichVuSV.getListDichVuDat(maTiec).size());
     }
     //Update thông tin đặt tiệc
@@ -121,10 +126,15 @@ public class DatTiecTester {
         d.setBuoi("Tối");
         datTiecSV.updateDatTiec(d);
         Assertions.assertEquals("Tối", datTiecSV.FindDatTiec(maTiec).getBuoi()); 
-    } 
-    //Xóa 1 tiệc!
+    }
     @Test
     public void Test8() throws SQLException{
+        datTiecSV = new DatTiecServices();
+        Assertions.assertNotNull(datTiecSV.FindDatTiec(5));
+    }
+    //Xóa 1 tiệc!
+    @Test
+    public void Test9() throws SQLException{
         datTiecSV = new DatTiecServices();
         int a = datTiecSV.getListDatTiec(null).size();
         datTiecSV.delDatTiec(maTiec);

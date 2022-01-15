@@ -12,127 +12,146 @@ import java.math.BigDecimal;
  * @author ANHMINH
  */
 public class NhanVien {
-    private int maNhanVien;
-    private String tenNhanVien;
-    private int SDT;
-    private int CMND;
-    private int maBoPhan;
-    private String chucVu;
-    private BigDecimal luong;
-    private int maAccount;
-    public NhanVien(){
-        
+    private int MaNV;
+    private String TenNV;
+    private String SDT;
+    private String CMND;
+    private int MaBP;
+    private String ChucVu;
+    private BigDecimal Luong;
+    private int MaAccount;
+
+    public NhanVien() {
+    }
+    
+    public NhanVien(int MaNV,String TenNV, String SDT, String ChucVu) {
+        this.MaNV = MaNV;
+        this.TenNV = TenNV;
+        this.SDT = SDT;
+        this.ChucVu = ChucVu;
+    }
+    
+    public NhanVien(int MaNV, String TenNV, String SDT, String CMND, int MaBP, String ChucVu, BigDecimal Luong, int MaAccount) {
+        this.MaNV = MaNV;
+        this.TenNV = TenNV;
+        this.SDT = SDT;
+        this.CMND = CMND;
+        this.MaBP = MaBP;
+        this.ChucVu = ChucVu;
+        this.Luong = Luong;
+        this.MaAccount = MaAccount;
+    }
+    /**
+     * @return the MaNV
+     */
+    public int getMaNV() {
+        return MaNV;
     }
 
     /**
-     * @return the maNhanVien
+     * @param MaNV the MaNV to set
      */
-    public int getMaNhanVien() {
-        return maNhanVien;
+    public void setMaNV(int MaNV) {
+        this.MaNV = MaNV;
     }
 
     /**
-     * @param maNhanVien the maNhanVien to set
+     * @return the TenNV
      */
-    public void setMaNhanVien(int maNhanVien) {
-        this.maNhanVien = maNhanVien;
+    public String getTenNV() {
+        return TenNV;
     }
 
     /**
-     * @return the tenNhanVien
+     * @param TenNV the TenNV to set
      */
-    public String getTenNhanVien() {
-        return tenNhanVien;
-    }
-
-    /**
-     * @param tenNhanVien the tenNhanVien to set
-     */
-    public void setTenNhanVien(String tenNhanVien) {
-        this.tenNhanVien = tenNhanVien;
+    public void setTenNV(String TenNV) {
+        this.TenNV = TenNV;
     }
 
     /**
      * @return the SDT
      */
-    public int getSDT() {
+    public String getSDT() {
         return SDT;
     }
 
     /**
      * @param SDT the SDT to set
      */
-    public void setSDT(int SDT) {
+    public void setSDT(String SDT) {
         this.SDT = SDT;
     }
 
     /**
      * @return the CMND
      */
-    public int getCMND() {
+    public String getCMND() {
         return CMND;
     }
 
     /**
      * @param CMND the CMND to set
      */
-    public void setCMND(int CMND) {
+    public void setCMND(String CMND) {
         this.CMND = CMND;
     }
 
     /**
-     * @return the maBoPhan
-     */
-    public int getMaBoPhan() {
-        return maBoPhan;
-    }
-
-    /**
-     * @param maBoPhan the maBoPhan to set
-     */
-    public void setMaBoPhan(int maBoPhan) {
-        this.maBoPhan = maBoPhan;
-    }
-
-    /**
-     * @return the chucVu
+     * @return the ChucVu
      */
     public String getChucVu() {
-        return chucVu;
+        return ChucVu;
     }
 
     /**
-     * @param chucVu the chucVu to set
+     * @param ChucVu the ChucVu to set
      */
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
+    public void setChucVu(String ChucVu) {
+        this.ChucVu = ChucVu;
     }
 
     /**
-     * @return the luong
+     * @return the Luong
      */
     public BigDecimal getLuong() {
-        return luong;
+        return Luong;
     }
 
     /**
-     * @param luong the luong to set
+     * @param Luong the Luong to set
      */
-    public void setLuong(BigDecimal luong) {
-        this.luong = luong;
+    public void setLuong(BigDecimal Luong) {
+        this.Luong = Luong;
     }
 
     /**
-     * @return the maAccount
+     * @return the MaAccount
      */
     public int getMaAccount() {
-        return maAccount;
+        return MaAccount;
     }
 
     /**
-     * @param maAccount the maAccount to set
+     * @param MaAccount the MaAccount to set
      */
-    public void setMaAccount(int maAccount) {
-        this.maAccount = maAccount;
+    public void setMaAccount(int MaAccount) {
+        this.MaAccount = MaAccount;
     }
+
+    /**
+     * @return the MaBP
+     */
+    public int getMaBP() {
+        return MaBP;
+    }
+
+    /**
+     * @param MaBP the MaBP to set
+     */
+    public void setMaBP(int MaBP) {
+        this.MaBP = MaBP;
+    }
+    
+    
 }

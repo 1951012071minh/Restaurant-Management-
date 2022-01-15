@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Test.DatTiecTester
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.132 s - in Test.DatTiecTester
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.186 s - in Test.DatTiecTester
