@@ -100,7 +100,7 @@ public class FDangNhapController implements Initializable {
         { 
           if(cbQuyenTruyCap.getValue()=="Khách Hàng"){
             a.setTypeUser("KH");              
-             if(!(tfTaiKhoan).getText().isEmpty() || !(tfMatKhau).getText().isEmpty()||tfMatKhau.getText().equals("")||tfTaiKhoan.getText().equals("")){
+        if(!((tfTaiKhoan).getText().isEmpty() || (tfMatKhau).getText().isEmpty()||tfMatKhau.getText().equals("")||tfTaiKhoan.getText().equals(""))){
                       if(check && s.checkACCOUNT(a)==1){
                              login=true;
                              KhachHangServices kh = new KhachHangServices();
@@ -125,7 +125,7 @@ public class FDangNhapController implements Initializable {
             a.setTypeUser("NV");
 
 
-        if(!(tfTaiKhoan).getText().isEmpty() || !(tfMatKhau).getText().isEmpty()||tfMatKhau.getText().equals("")||tfTaiKhoan.getText().equals(""))
+        if(!((tfTaiKhoan).getText().isEmpty() || (tfMatKhau).getText().isEmpty()||tfMatKhau.getText().equals("")||tfTaiKhoan.getText().equals("")))
         {
             if(check && s.checkACCOUNT(a) == -1){
                 login=true;
@@ -146,7 +146,6 @@ public class FDangNhapController implements Initializable {
         else
             Utils.getBox("Chưa nhập đủ thông tin!", Alert.AlertType.WARNING).show();
     }
-
   
 
     public void success_NV ()throws IOException{

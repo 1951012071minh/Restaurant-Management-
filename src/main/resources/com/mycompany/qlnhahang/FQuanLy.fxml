@@ -319,12 +319,12 @@
                   </VBox>
                   <VBox layoutX="576.0" layoutY="145.0" prefHeight="62.0" prefWidth="168.0" spacing="8.0">
                      <children>
-                        <DatePicker fx:id="dpFromHD" />
-                        <DatePicker fx:id="dpToHD" />
+                        <DatePicker fx:id="dpFromHD" editable="false" showWeekNumbers="true" />
+                        <DatePicker fx:id="dpToHD" editable="false" showWeekNumbers="true" />
                      </children>
                   </VBox>
                   <TableView fx:id="tvHoaDon" layoutX="12.0" layoutY="225.0" prefHeight="233.0" prefWidth="734.0" />
-                     <TextField id="txt_TinhTrang" fx:id="txtDoanhThuHD" layoutX="612.0" layoutY="465.0" prefHeight="14.0" prefWidth="134.0" />
+                     <TextField id="txt_TinhTrang" fx:id="txtDoanhThuHD" editable="false" layoutX="612.0" layoutY="465.0" prefHeight="14.0" prefWidth="134.0" />
                      <Text layoutX="545.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doanh thu:" />
                      <RadioButton fx:id="rbToanBoHD" layoutX="623.0" layoutY="206.0" mnemonicParsing="false" selected="true" text="Toàn bộ hóa đơn" />
                </children>

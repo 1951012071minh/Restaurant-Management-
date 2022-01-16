@@ -43,33 +43,34 @@ public class FThemDichVuController implements Initializable {
         DichVu dv = dvs.findDichVu(this.txt_TenDV.getText());
         if(txt_TenDV.getText().trim().equals("")|| txt_DonGia.getText().trim().equals("")){
                         Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
-            else{
+        else{
             int a = Integer.parseInt(txt_DonGia.getText());
             if(a <= 0)
                 Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
             else
-            if(dv.getMaDV() == 0){
-            //thêm
-            dv.setMaDV(dvs.getMaxDV());
-            dv.setTenDV(this.txt_TenDV.getText());
-            dv.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
-            dvs.addDichVuVaoDB(dv);
-            Utils.getBox("Thêm dịch vụ thành công", Alert.AlertType.INFORMATION).show();
-            this.txt_TenDV.clear();
-            this.txt_DonGia.clear();
-            }
-            else 
-            //cập nhật
-            if(dv.getIsDeleted() != null){
+                if(dv == null){
+                //thêm
+                dv = new DichVu();
+                dv.setMaDV(dvs.getMaxDV());
                 dv.setTenDV(this.txt_TenDV.getText());
                 dv.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
-                dvs.addDichVuVaoDBIsDeleted(dv);
-                Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
+                dvs.addDichVuVaoDB(dv);
+                Utils.getBox("Thêm dịch vụ thành công", Alert.AlertType.INFORMATION).show();
                 this.txt_TenDV.clear();
                 this.txt_DonGia.clear();
-            }else{
-                Utils.getBox("Món ăn đã tồn tại", Alert.AlertType.WARNING).show();
-            }
+                }
+                else 
+                //cập nhật
+                if(dv.getIsDeleted() != null){
+                    dv.setTenDV(this.txt_TenDV.getText());
+                    dv.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
+                    dvs.addDichVuVaoDBIsDeleted(dv);
+                    Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
+                    this.txt_TenDV.clear();
+                    this.txt_DonGia.clear();
+                }else{
+                    Utils.getBox("Món ăn đã tồn tại", Alert.AlertType.WARNING).show();
+                }
         }
     }        
 }

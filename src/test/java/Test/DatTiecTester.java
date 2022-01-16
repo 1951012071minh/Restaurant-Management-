@@ -16,6 +16,7 @@ import com.mycompany.services.DatTiecServices;
 import com.mycompany.services.DichVuServices;
 import com.mycompany.services.HoaDonServices;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
@@ -31,15 +32,15 @@ public class DatTiecTester {
     DatMonAnServices datMonAnSV;
     DatDichVuServices datDichVuSV;
     DichVuServices dichVuSV;
-    int maTiec = 5;
+    int maTiec = 20;
     @Test
     //Test đặt tiệc
-    public void Test1() throws SQLException{
+    public void Test01() throws SQLException{
         datTiecSV = new DatTiecServices();
         hoaDonSV = new HoaDonServices();
         DatTiec d = new DatTiec();
         d.setMaTiec(maTiec);
-        d.setMaKH(1);
+        d.setMaKH(2);
         d.setNgayToChuc(java.sql.Date.valueOf(LocalDate.now()));
         d.setNgayDat(java.sql.Date.valueOf(LocalDate.now()));
         d.setSoLuongBan(10);
@@ -56,7 +57,7 @@ public class DatTiecTester {
     }
     @Test
     //Test đặt món và tự động cập nhật tiền hóa đơn!
-    public void Test2() throws SQLException{
+    public void Test02() throws SQLException{
         hoaDonSV = new HoaDonServices();
         HoaDon h = hoaDonSV.getHoaDon(maTiec);
         datMonAnSV = new DatMonAnServices();
@@ -73,7 +74,7 @@ public class DatTiecTester {
     }
     @Test
     //Test update món
-    public void Test3() throws SQLException{
+    public void Test03() throws SQLException{
         datMonAnSV = new DatMonAnServices();
         DatMonAn d = datMonAnSV.getDatMonAn(maTiec, 1);
         d.setSoLuong(5);
@@ -83,7 +84,7 @@ public class DatTiecTester {
     
     @Test
     //Test xóa món ăn và cập nhật tiền trong hóa đơn
-    public void Test4() throws SQLException{
+    public void Test04() throws SQLException{
         hoaDonSV = new HoaDonServices();
         HoaDon h = hoaDonSV.getHoaDon(maTiec);
         datMonAnSV = new DatMonAnServices();
@@ -97,7 +98,7 @@ public class DatTiecTester {
     }
     @Test
     //Test đặt dịch vụ
-    public void Test5() throws SQLException{
+    public void Test05() throws SQLException{
         datDichVuSV = new DatDichVuServices();
         DatDichVu d = new DatDichVu();
         d.setMaDV(1);
@@ -110,7 +111,7 @@ public class DatTiecTester {
     
     @Test
     //Test xóa dịch vụ đã đặt
-    public void Test6() throws SQLException{
+    public void Test06() throws SQLException{
         datDichVuSV = new DatDichVuServices();
         DatDichVu d = datDichVuSV.getDatDV(maTiec, 1);
         int a = datDichVuSV.getListDichVuDat(maTiec).size();
@@ -120,7 +121,7 @@ public class DatTiecTester {
     }
     //Update thông tin đặt tiệc
     @Test
-    public void Test7() throws SQLException{
+    public void Test07() throws SQLException{
         datTiecSV = new DatTiecServices();
         DatTiec d = datTiecSV.FindDatTiec(maTiec);
         d.setBuoi("Tối");
@@ -128,13 +129,36 @@ public class DatTiecTester {
         Assertions.assertEquals("Tối", datTiecSV.FindDatTiec(maTiec).getBuoi()); 
     }
     @Test
-    public void Test8() throws SQLException{
+    public void Test08() throws SQLException{
         datTiecSV = new DatTiecServices();
-        Assertions.assertNotNull(datTiecSV.FindDatTiec(5));
+        Assertions.assertNotNull(datTiecSV.FindDatTiec(20));
+    }
+    @Test
+    public void Test09() throws SQLException{
+        datTiecSV = new DatTiecServices();
+        hoaDonSV = new HoaDonServices();
+        DatTiec d = new DatTiec();
+        d.setMaTiec(datTiecSV.getMaxDatTiec());
+        d.setMaKH(3);
+        d.setNgayToChuc(java.sql.Date.valueOf(LocalDate.now()));
+        d.setNgayDat(java.sql.Date.valueOf(LocalDate.now()));
+        d.setSoLuongBan(10);
+        d.setSoLuongKhach(100);
+        d.setTenTiec("Tiệc cưới");
+        d.setMaSanh(1);
+        d.setBuoi("Tối");
+        int a = datTiecSV.getListDatTiec(null).size();
+        if(datTiecSV.checkDatTiec(1, (Date) d.getNgayDat(), d.getBuoi()) == 0){
+            datTiecSV.addDatTiec(d);
+            HoaDon h = new HoaDon();
+            h.setMaTiec(d.getMaTiec());
+            hoaDonSV.addHoaDon(h);
+        }
+        Assertions.assertEquals(a, datTiecSV.getListDatTiec(null).size());
     }
     //Xóa 1 tiệc!
     @Test
-    public void Test9() throws SQLException{
+    public void Test10() throws SQLException{
         datTiecSV = new DatTiecServices();
         int a = datTiecSV.getListDatTiec(null).size();
         datTiecSV.delDatTiec(maTiec);

@@ -136,7 +136,10 @@ public class KhachHangServices {
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, userName);           
             ResultSet rs = stm.executeQuery();
-           while(rs.next()){
+           if(!rs.next()){
+               return null;
+           }
+           else{
                 s = new KhachHang(rs.getInt("MaKH"), rs.getString("TenKH"),rs.getString("CMND")
                         , rs.getString("DiaChi"), rs.getString("GioiTinh"), rs.getInt("MaAcc"), rs.getString("SDT"));
             }     

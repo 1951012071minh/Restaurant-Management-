@@ -110,9 +110,9 @@ public class DichVuServices {
       public void xoaDichVu(DichVu dv) throws SQLException{
             try(Connection conn = JdbcUtils.getConn()){
                 String sql = "UPDATE DichVu \n SET isDeleted = curDate()\n"
-                        + "WHERE TenDV = ?";
+                        + "WHERE MaDV = ?";
                 PreparedStatement stm = conn.prepareStatement(sql);
-                stm.setString(1, dv.getTenDV());
+                stm.setInt(1, dv.getMaDV());
                 stm.executeUpdate();
             }
         }
