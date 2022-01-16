@@ -464,6 +464,8 @@ public class FDatTiecController implements Initializable {
                 if(!"".equals(txtMaMA.getText().trim())){
                     if("".equals(txtSoLuong.getText().trim()))
                         throw new Exception("Vui lòng nhập số lượng món ăn");
+                    if(parseInt(txtSoLuong.getText()) > 100)
+                        throw new Exception("Số lượng món ăn không được vượt quá 100");
                     DatMonAn d = new DatMonAn();
                     d.setMaMA(parseInt(txtMaMA.getText()));
                     d.setMaTiec(maTiec);
@@ -535,6 +537,8 @@ public class FDatTiecController implements Initializable {
                 if(parseInt(txtSoLuong.getText()) <= 0){
                         throw new NumberFormatException();
                 }
+                if(parseInt(txtSoLuong.getText()) > 100)
+                        throw new Exception("Số lượng món ăn không được vượt quá 100");
                 d.setMaMA(parseInt(txtMaMA.getText()));
                 d.setMaTiec(maTiec);
                 d.setSoLuong(parseInt(txtSoLuong.getText()));

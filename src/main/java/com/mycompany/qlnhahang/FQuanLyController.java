@@ -289,7 +289,7 @@ public class FQuanLyController implements Initializable {
         });
         this.txtTimKiemDDT.textProperty().addListener((evt) -> {
             try {
-                this.loadTvDatTiecData(this.txtTimKiemDDT.getText());
+                this.loadTvDatTiecData(this.txtTimKiemDDT.getText().trim());
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -629,10 +629,10 @@ public class FQuanLyController implements Initializable {
         this.loadTvSanhData(null);
     }
      public void deleteSanhHandler(ActionEvent event) throws SQLException, ParseException{
-         try{
+          try{
              Sanh s = new Sanh();
              SanhServices ss = new SanhServices();
-             s.setTenSanh(this.txt_TenSanh.getText());
+             s.setMaSanh(parseInt(txt_MaSanh.getText()));
              try{
                  ss.xoaSanh(s);
                  this.txt_MaSanh.clear();
@@ -647,7 +647,7 @@ public class FQuanLyController implements Initializable {
                  Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
             }catch(NumberFormatException e){
-                Utils.getBox("Xin nhập đúng kiểu dữ liệu!", Alert.AlertType.WARNING).show();
+                Utils.getBox("Xin chọn sảnh để xóa", Alert.AlertType.WARNING).show();
         }
     }
 
@@ -697,7 +697,7 @@ public class FQuanLyController implements Initializable {
          try{
              MonAn ma = new MonAn();
              MonAnServices mas = new MonAnServices();
-             ma.setTenMA(this.txt_TenMA.getText());
+             ma.setMaMA(parseInt(txt_MaMA.getText()));
              try{
                  mas.xoaMonAn(ma);
                  this.txt_MaMA.clear();
@@ -712,7 +712,7 @@ public class FQuanLyController implements Initializable {
                  Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
             }catch(NumberFormatException e){
-                Utils.getBox("Xin nhập đúng kiểu dữ liệu!", Alert.AlertType.WARNING).show();
+                Utils.getBox("Xin chọn món ăn cần xóa!", Alert.AlertType.WARNING).show();
         }
     }
      public void clickThemDichVu(ActionEvent event) throws IOException{
@@ -753,10 +753,10 @@ public class FQuanLyController implements Initializable {
         this.loadTVDichVuData(null);
     }
      public void deleteDichVuHandler(ActionEvent event) throws SQLException, ParseException{
-         try{
+        try{
              DichVu dv = new DichVu();
              DichVuServices mas = new DichVuServices();
-             dv.setTenDV(this.txt_TenDV.getText());
+             dv.setMaDV(parseInt(txt_MaDV.getText()));
              try{
                  mas.xoaDichVu(dv);
                  this.txt_MaDV.clear();
@@ -769,7 +769,7 @@ public class FQuanLyController implements Initializable {
                  Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
             }
             }catch(NumberFormatException e){
-                Utils.getBox("Xin nhập đúng kiểu dữ liệu!", Alert.AlertType.WARNING).show();
+                Utils.getBox("Xin chọn dịch vụ để xóa!", Alert.AlertType.WARNING).show();
         }
     }
      

@@ -132,9 +132,9 @@ public class SanhServices {
     public void xoaSanh(Sanh s) throws SQLException{
         try(Connection conn = JdbcUtils.getConn()){
             String sql = "UPDATE Sanh \n SET isDeleted = curDate()\n"
-                    + "WHERE TenSanh = ?";
+                    + "WHERE MaSanh = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setString(1, s.getTenSanh());
+            stm.setInt(1, s.getMaSanh());
             stm.executeUpdate();
         }
     }

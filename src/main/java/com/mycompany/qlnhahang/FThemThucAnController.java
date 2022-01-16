@@ -54,35 +54,37 @@ public class FThemThucAnController implements Initializable {
         MonAn ma = mas.findMonAn(txt_TenMA.getText());
         if(txt_TenMA.getText().trim().equals("")|| txt_DonGia.getText().trim().equals("")){
                         Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
-            else{
+        else{
             int a = Integer.parseInt(txt_DonGia.getText());
             if(a <= 0)
                 Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
-            else if(ma.getMaMA() == 0){
-            //thêm
-            ma.setMaMA(mas.getMaxMA());
-            ma.setTenMA(this.txt_TenMA.getText());
-            ma.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
-            ma.setLoai((String)this.cb_Loai.getValue());
-            ma.setDonViTinh((String)this.cb_DonViTinh.getValue());
-            mas.addMonAnVaoDB(ma);
-            Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
-            this.txt_TenMA.clear();
-            this.txt_DonGia.clear();
-        }else
-            //cập nhật
-            if(ma.getIsDeleted() != null){
+            else 
+                if(ma == null){
+                //thêm
+                ma = new MonAn();
+                ma.setMaMA(mas.getMaxMA());
                 ma.setTenMA(this.txt_TenMA.getText());
                 ma.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
                 ma.setLoai((String)this.cb_Loai.getValue());
                 ma.setDonViTinh((String)this.cb_DonViTinh.getValue());
-                mas.addMonAnVaoDBIsDeleted(ma);
+                mas.addMonAnVaoDB(ma);
                 Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
                 this.txt_TenMA.clear();
                 this.txt_DonGia.clear();
-            }else{
-                Utils.getBox("Món ăn đã tồn tại", Alert.AlertType.WARNING).show();
-            }
+                }else
+                    //cập nhật
+                    if(ma.getIsDeleted() != null){
+                        ma.setTenMA(this.txt_TenMA.getText());
+                        ma.setDonGia(BigDecimal.valueOf(Integer.parseInt(this.txt_DonGia.getText())));
+                        ma.setLoai((String)this.cb_Loai.getValue());
+                        ma.setDonViTinh((String)this.cb_DonViTinh.getValue());
+                        mas.addMonAnVaoDBIsDeleted(ma);
+                        Utils.getBox("Thêm món ăn thành công", Alert.AlertType.INFORMATION).show();
+                        this.txt_TenMA.clear();
+                        this.txt_DonGia.clear();
+                    }else{
+                        Utils.getBox("Món ăn đã tồn tại", Alert.AlertType.WARNING).show();
+                    }
         }
     }   
 } 

@@ -6,12 +6,14 @@
 package Test;
 
 import com.mycompany.conf.JdbcUtils;
+import com.mycompany.pojo.Account;
 import com.mycompany.services.AccountServices;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import org.junit.jupiter.api.Test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +29,7 @@ public class AccountTester {
     int maAccount = 1;
     
     @Test
-    public void testQuantity() throws SQLException{
+    public void testUsername() throws SQLException{
         Connection conn = JdbcUtils.getConn();
         PreparedStatement stm = conn.prepareStatement("SELECT * FROM account");
         ResultSet rs = stm.executeQuery();
@@ -44,9 +46,24 @@ public class AccountTester {
     }
     
     @Test
-    public void Test2() throws SQLException{
+    public void testGetAccountByUserName() throws SQLException{
         AccountServices s = new AccountServices();
         Assertions.assertNotNull(s.FindAccount("Hnguyen"));
         Assertions.assertNull(s.FindAccount("huynhnguyen"));
+    }
+    @Test// ADD accounnt
+    public void testAddAcc()throws SQLException{
+        Account ac= new Account();
+        AccountServices ACSV= new AccountServices();
+        Connection conn= JdbcUtils.getConn();
+        Statement stm= conn.createStatement();
+        ac.setMaAccount(ACSV.getMaAccount());
+        ac.setPassWord("22222");
+        ac.setUsername("nnhatsang12");
+        ac.setTypeUser("NV");
+        
+        int a=ACSV.getListAccount().size();
+        ACSV.addAccount(ac);
+        Assertions.assertEquals(a+1, ACSV.getListAccount().size());   
     }
 }

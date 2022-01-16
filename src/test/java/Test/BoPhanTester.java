@@ -30,7 +30,7 @@ public class BoPhanTester {
     int maBoPhan = 5;
     
     @Test
-    public void testQuanity() throws SQLException{
+    public void TestUniqueTenBP() throws SQLException{
         Connection conn = JdbcUtils.getConn();
         PreparedStatement stm = conn.prepareStatement("SELECT * FROM bophan");
         ResultSet rs = stm.executeQuery();

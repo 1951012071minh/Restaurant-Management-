@@ -120,9 +120,9 @@ public class MonAnServices {
     public void xoaMonAn(MonAn ma) throws SQLException{
             try(Connection conn = JdbcUtils.getConn()){
                 String sql = "UPDATE MonAn \n SET isDeleted = curDate()\n"
-                        + "WHERE TenMA = ?";
+                        + "WHERE MaMA = ?";
                 PreparedStatement stm = conn.prepareStatement(sql);
-                stm.setString(1, ma.getTenMA());
+                stm.setInt(1, ma.getMaMA());
                 stm.executeUpdate();
             }
         }

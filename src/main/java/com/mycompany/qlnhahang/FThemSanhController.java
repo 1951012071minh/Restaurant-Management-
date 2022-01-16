@@ -55,41 +55,42 @@ public class FThemSanhController implements Initializable {
                     || txt_SucChua.getText().trim().equals("") || txt_GiaTien.getText().trim().equals("")){
                         Utils.getBox("Xin vui lòng nhập đúng và đủ dữ liệu", Alert.AlertType.WARNING).show();}
             else{
-            int a = Integer.parseInt(txt_Tang.getText());
-            int b = Integer.parseInt(txt_SucChua.getText());
-            int c = Integer.parseInt(txt_GiaTien.getText());
-            if(a <= 0 || b <= 0 || c <= 0)
-                Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
-            else if(s.getMaSanh() == 0){
-            //thêm mới
-            s.setMaSanh(ss.getMaxSanh());
-            s.setTenSanh(this.txt_TenSanh.getText());
-            s.setTang(parseInt(this.txt_Tang.getText()));
-            s.setSucChua(parseInt(this.txt_SucChua.getText()));
-            s.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_GiaTien.getText()))));
-            ss.addSanhVaoDB(s);
-            Utils.getBox("Thêm sảnh thành công", Alert.AlertType.INFORMATION).show();
-            this.txt_TenSanh.clear();
-            this.txt_Tang.clear();
-            this.txt_SucChua.clear();
-            this.txt_GiaTien.clear();
-            } else
-            if(s.getIsDeleted() != null){
-                // cập nhật
-            s.setTenSanh(this.txt_TenSanh.getText());
-            s.setTang(parseInt(this.txt_Tang.getText()));
-            s.setSucChua(parseInt(this.txt_SucChua.getText()));
-            s.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_GiaTien.getText()))));
-            ss.addSanhVaoDBIsDeleted(s);
-            Utils.getBox("Thêm sảnh thành công", Alert.AlertType.INFORMATION).show();
-            this.txt_TenSanh.clear();
-            this.txt_Tang.clear();
-            this.txt_SucChua.clear();
-            this.txt_GiaTien.clear();
-            }
-            else{
-                //báo tồn tại
-                Utils.getBox("Sảnh đã tồn tại", Alert.AlertType.WARNING).show();
+                int a = Integer.parseInt(txt_Tang.getText());
+                int b = Integer.parseInt(txt_SucChua.getText());
+                int c = Integer.parseInt(txt_GiaTien.getText());
+                if(a <= 0 || b <= 0 || c <= 0)
+                    Utils.getBox("Xin vui lòng nhập số nguyên dương", Alert.AlertType.WARNING).show();
+                else if(s == null){
+                    //thêm mới
+                    s = new Sanh();
+                    s.setMaSanh(ss.getMaxSanh());
+                    s.setTenSanh(this.txt_TenSanh.getText());
+                    s.setTang(parseInt(this.txt_Tang.getText()));
+                    s.setSucChua(parseInt(this.txt_SucChua.getText()));
+                    s.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_GiaTien.getText()))));
+                    ss.addSanhVaoDB(s);
+                    Utils.getBox("Thêm sảnh thành công", Alert.AlertType.INFORMATION).show();
+                    this.txt_TenSanh.clear();
+                    this.txt_Tang.clear();
+                    this.txt_SucChua.clear();
+                    this.txt_GiaTien.clear();
+                } else
+                if(s.getIsDeleted() != null){
+                    // cập nhật
+                    s.setTenSanh(this.txt_TenSanh.getText());
+                    s.setTang(parseInt(this.txt_Tang.getText()));
+                    s.setSucChua(parseInt(this.txt_SucChua.getText()));
+                    s.setDonGia(BigDecimal.valueOf((Integer.parseInt(this.txt_GiaTien.getText()))));
+                    ss.addSanhVaoDBIsDeleted(s);
+                    Utils.getBox("Thêm sảnh thành công", Alert.AlertType.INFORMATION).show();
+                    this.txt_TenSanh.clear();
+                    this.txt_Tang.clear();
+                    this.txt_SucChua.clear();
+                    this.txt_GiaTien.clear();
+                }
+                else{
+                    //báo tồn tại
+                    Utils.getBox("Sảnh đã tồn tại", Alert.AlertType.WARNING).show();
         }
     }
 }

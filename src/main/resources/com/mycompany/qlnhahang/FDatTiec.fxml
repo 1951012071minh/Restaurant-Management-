@@ -31,10 +31,10 @@
                   <VBox layoutX="112.0" layoutY="27.0" prefHeight="142.0" prefWidth="127.0" spacing="10.0">
                      <children>
                               <TextField id="txt_MaTiec" fx:id="txtMaTiec" editable="false" prefWidth="123.0" />
-                        <TextField id="txt_MaKhachHang" fx:id="txtMaKH" prefWidth="123.0" />
+                        <TextField id="txt_MaKhachHang" fx:id="txtMaKH" editable="false" prefWidth="123.0" />
                               <TextField id="txt_TenKhachHang" fx:id="txtTenKH" editable="false" prefWidth="123.0" />
                               <TextField id="txt_NgayDat" fx:id="txtNgayDat" editable="false" prefWidth="123.0" />
-                        <DatePicker fx:id="dpNgayDat" />
+                        <DatePicker fx:id="dpNgayDat" editable="false" showWeekNumbers="true" />
                      </children>
                   </VBox>
                   <VBox layoutX="12.0" layoutY="33.0" prefHeight="168.0" prefWidth="100.0" spacing="18.0">
@@ -80,7 +80,7 @@
                               <TextField id="txt_DatTenTiec" fx:id="txtTenTiec" prefWidth="123.0" />
                               <TextField id="txt_SoBan" fx:id="txtSoLuongKhach" prefWidth="123.0" />
                               <TextField id="txt_TenSanhCuoi" fx:id="txtSoBan" prefWidth="123.0" />
-                        <ComboBox fx:id="cbBuoi" editable="true" prefWidth="150.0" />
+                        <ComboBox fx:id="cbBuoi" prefWidth="150.0" />
                            </children>
                         </VBox>
                         <Button id="btn_Them" layoutX="592.0" layoutY="486.0" mnemonicParsing="false" onAction="#addDatTiecHandler" prefHeight="31.0" prefWidth="100.0" text="Đặt tiệc" textFill="#fc0000">
@@ -191,9 +191,9 @@
                <children>
                   <VBox layoutX="464.0" layoutY="139.0" prefHeight="108.0" prefWidth="122.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_NgayToChuc" fx:id="txtNgayDatTT" prefWidth="123.0" />
-                        <TextField id="txt_NgayDatTiec" fx:id="txtNgayToChuc" prefWidth="123.0" />
-                        <TextField id="txt_Buoi" fx:id="txtBuoi" prefWidth="123.0" />
+                        <TextField id="txt_NgayToChuc" fx:id="txtNgayDatTT" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_NgayDatTiec" fx:id="txtNgayToChuc" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_Buoi" fx:id="txtBuoi" editable="false" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="353.0" layoutY="142.0" prefHeight="98.0" prefWidth="99.0" spacing="20.0">
@@ -205,9 +205,9 @@
                   </VBox>
                   <VBox layoutX="129.0" layoutY="141.0" prefHeight="99.0" prefWidth="124.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_MaSanhCuoi" fx:id="txtMaSanhTT" prefWidth="123.0" />
-                        <TextField id="txt_TenSanhCuoi" fx:id="txtSoLuongKhachTT" prefWidth="123.0" />
-                        <TextField id="txt_GiaThue" fx:id="txtSLBTT" prefWidth="123.0" />
+                        <TextField id="txt_MaSanhCuoi" fx:id="txtMaSanhTT" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_TenSanhCuoi" fx:id="txtSoLuongKhachTT" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_GiaThue" fx:id="txtSLBTT" editable="false" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="140.0" prefHeight="103.0" prefWidth="87.0" spacing="20.0">
@@ -219,8 +219,8 @@
                   </VBox>
                   <VBox layoutX="463.0" layoutY="30.0" prefHeight="80.0" prefWidth="123.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_Tang" fx:id="txtCMND" prefWidth="123.0" />
-                        <TextField id="txt_SĐT" fx:id="txtSDT" prefWidth="123.0" />
+                        <TextField id="txt_Tang" fx:id="txtCMND" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_SĐT" fx:id="txtSDT" editable="false" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="351.0" layoutY="34.0" prefHeight="83.0" prefWidth="102.0" spacing="20.0">
@@ -231,8 +231,8 @@
                   </VBox>
                   <VBox layoutX="130.0" layoutY="30.0" prefHeight="67.0" prefWidth="124.0" spacing="12.0">
                      <children>
-                        <TextField id="txt_MaKhachHang" fx:id="txtMaKHTT" prefWidth="123.0" />
-                        <TextField id="txt_HoVaTen" fx:id="txtTenKHTT" prefWidth="123.0" />
+                        <TextField id="txt_MaKhachHang" fx:id="txtMaKHTT" editable="false" prefWidth="123.0" />
+                        <TextField id="txt_HoVaTen" fx:id="txtTenKHTT" editable="false" prefWidth="123.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="15.0" layoutY="34.0" prefHeight="78.0" prefWidth="116.0" spacing="20.0">
@@ -249,7 +249,7 @@
                   </Button>
                   <Text id="lbl_DanhSachSanhCuoi" layoutX="365.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Danh sách món ăn" />
                   <Text id="lbl_Buoi" layoutX="463.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng tiền" />
-                  <TextField id="txt_TongTien" fx:id="txt_TongTien" layoutX="552.0" layoutY="460.0" prefHeight="25.0" prefWidth="136.0" />
+                  <TextField id="txt_TongTien" fx:id="txt_TongTien" editable="false" layoutX="552.0" layoutY="460.0" prefHeight="25.0" prefWidth="136.0" />
                   <TableView fx:id="tvDatDV" layoutX="10.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
                   <TableView fx:id="tvDatMon" layoutX="359.0" layoutY="295.0" prefHeight="157.0" prefWidth="331.0" />
                   <Text id="lbl_ThongTinSanhDaChon" layoutX="-9.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Xác nhận thanh toán" textAlignment="CENTER" wrappingWidth="700.0000000000001">
