@@ -49,7 +49,7 @@ public class AccountTester {
     public void testGetAccountByUserName() throws SQLException{
         AccountServices s = new AccountServices();
         Assertions.assertNotNull(s.FindAccount("Hnguyen"));
-        Assertions.assertNull(s.FindAccount("huynhnguyen"));
+        Assertions.assertNull(s.FindAccount("huynhnguyen123"));
     }
     @Test// ADD accounnt
     public void testAddAcc()throws SQLException{
@@ -65,5 +65,12 @@ public class AccountTester {
         int a=ACSV.getListAccount().size();
         ACSV.addAccount(ac);
         Assertions.assertEquals(a+1, ACSV.getListAccount().size());   
+    }
+    @Test
+    public void testDangNhap() throws SQLException
+    {
+        AccountServices ACSV= new AccountServices();
+        Assertions.assertTrue(ACSV.CheckLogin("Aminh", "0&@#$a!&*#!!&*#7!&*#h&@#$i!&*#m!&*#n&@#$"));
+        Assertions.assertFalse(ACSV.CheckLogin("Aminh", "anhminh0710"));
     }
 }
