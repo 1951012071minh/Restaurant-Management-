@@ -885,7 +885,7 @@ public class FQuanLyController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(FQuanLyController.class.getName()).log(Level.SEVERE, null, ex);
                 Utils.getBox("Xoá nhân viên không thành công!!!", Alert.AlertType.WARNING).show();
-        }
+            }
             this.loadTvNhanVienData(null);
         }
         else
@@ -1029,16 +1029,16 @@ public class FQuanLyController implements Initializable {
              nv.setLuong(BigDecimal.valueOf((parseInt(this.txtLuong.getText()))));
              nv.setMaAccount(parseInt(this.txtMaAccount.getText()));
              ns.updateNhanVien(nv);
-                 this.loadTvBoPhanData(null);
-                 this.txtMaNhanVien.clear();
-                 this.txtTenNhanVien.clear();
-                 this.txtSDT.clear();
-                 this.txtCMND.clear();
-                 this.txtChucVu.clear();
-                 this.txtLuong.clear();
-                 this.txtMaAccount.clear();
-                 Utils.getBox("Cập nhật nhân viên thành công", Alert.AlertType.INFORMATION).show();
-                 this.loadTvNhanVienData(null);
+             this.loadTvBoPhanData(null);
+             this.txtMaNhanVien.clear();
+             this.txtTenNhanVien.clear();
+             this.txtSDT.clear();
+             this.txtCMND.clear();
+             this.txtChucVu.clear();
+             this.txtLuong.clear();
+             this.txtMaAccount.clear();
+             Utils.getBox("Cập nhật nhân viên thành công", Alert.AlertType.INFORMATION).show();
+             this.loadTvNhanVienData(null);
              
          }catch(NumberFormatException numberFormatException){
              Utils.getBox("Kiểu dữ liệu không đúng", Alert.AlertType.WARNING).show();

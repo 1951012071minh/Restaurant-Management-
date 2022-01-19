@@ -104,8 +104,6 @@ public class FDangKyNhanVienController implements Initializable {
                 as.addAccount(a);
                 s.addNhanVien(k);
                 Utils.getBox("Thêm thành công", Alert.AlertType.INFORMATION).show();
-                Stage stage = (Stage) btnThoatDKNV.getScene().getWindow();
-                stage.close();
            }catch(NumberFormatException ex){
                  Utils.getBox("Vui lòng nhập đúng kiểu dữ liệu!", Alert.AlertType.INFORMATION).show();
            }catch(Exception ex){

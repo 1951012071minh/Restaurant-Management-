@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="Test.NhanVienTester" time="1.02" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="Test.NhanVienTester" time="0.918" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="16"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-16\bin"/>
-    <property name="sun.java.command" value="org.apache.maven.surefire.booter.ForkedBooter C:\Users\ANHMINH\AppData\Local\Temp\surefire5256025886042870755 2022-01-15T20-18-02_475-jvmRun1 surefire15544950567878213533tmp surefire_05922513815685816241tmp"/>
+    <property name="sun.java.command" value="org.apache.maven.surefire.booter.ForkedBooter C:\Users\ANHMINH\AppData\Local\Temp\surefire4111381655319595219 2022-01-19T10-58-18_741-jvmRun1 surefire8797640418760098579tmp surefire_012673450077620308920tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="test" value="Test.NhanVienTester"/>
     <property name="surefire.test.class.path" value="C:\Users\ANHMINH\Desktop\QLNhaHang\target\test-classes;C:\Users\ANHMINH\.m2\repository\org\openjfx\javafx-controls\13\javafx-controls-13.jar;C:\Users\ANHMINH\.m2\repository\org\openjfx\javafx-graphics\13\javafx-graphics-13.jar;C:\Users\ANHMINH\.m2\repository\org\openjfx\javafx-base\13\javafx-base-13.jar;C:\Users\ANHMINH\.m2\repository\org\openjfx\javafx-fxml\13\javafx-fxml-13.jar;C:\Users\ANHMINH\.m2\repository\mysql\mysql-connector-java\8.0.27\mysql-connector-java-8.0.27.jar;C:\Users\ANHMINH\.m2\repository\com\google\protobuf\protobuf-java\3.11.4\protobuf-java-3.11.4.jar;C:\Users\ANHMINH\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.2\junit-jupiter-api-5.8.2.jar;C:\Users\ANHMINH\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\ANHMINH\.m2\repository\org\junit\platform\junit-platform-commons\1.8.2\junit-platform-commons-1.8.2.jar;C:\Users\ANHMINH\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\ANHMINH\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.2\junit-jupiter-engine-5.8.2.jar;C:\Users\ANHMINH\.m2\repository\org\junit\platform\junit-platform-engine\1.8.2\junit-platform-engine-1.8.2.jar;C:\Users\ANHMINH\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.8.2\junit-jupiter-params-5.8.2.jar;C:\Users\ANHMINH\.m2\repository\commons-validator\commons-validator\1.6\commons-validator-1.6.jar;C:\Users\ANHMINH\.m2\repository\commons-beanutils\commons-beanutils\1.9.2\commons-beanutils-1.9.2.jar;C:\Users\ANHMINH\.m2\repository\commons-digester\commons-digester\1.8.1\commons-digester-1.8.1.jar;C:\Users\ANHMINH\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\ANHMINH\.m2\repository\commons-collections\commons-collections\3.2.2\commons-collections-3.2.2.jar;"/>
@@ -60,7 +60,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="60.0"/>
   </properties>
-  <testcase name="test1" classname="Test.NhanVienTester" time="0.71"/>
-  <testcase name="test2" classname="Test.NhanVienTester" time="0.154"/>
-  <testcase name="test3" classname="Test.NhanVienTester" time="0.132"/>
+  <testcase name="test1" classname="Test.NhanVienTester" time="0.639"/>
+  <testcase name="test2" classname="Test.NhanVienTester" time="0.143"/>
+  <testcase name="test3" classname="Test.NhanVienTester" time="0.114"/>
 </testsuite>

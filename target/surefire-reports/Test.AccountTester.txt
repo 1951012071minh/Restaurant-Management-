@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: Test.AccountTester
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.524 s - in Test.AccountTester
+Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.689 s <<< FAILURE! - in Test.AccountTester
+Test.AccountTester.testAddAcc  Time elapsed: 0.096 s  <<< ERROR!
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'nnhatsang12' for key 'account.Username_UNIQUE'
+	at com.mycompany.qlnhahang/Test.AccountTester.testAddAcc(AccountTester.java:66)
+

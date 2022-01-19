@@ -129,8 +129,6 @@ public class FDangKyKhachHangController implements Initializable {
                         as.addAccount(a);
                         s.addKhachHang(k);
                         Utils.getBox("Thêm thành công", Alert.AlertType.INFORMATION).show();
-                        Stage stage = (Stage) btnThoat.getScene().getWindow();
-                        stage.close();
             } catch(SQLException ex){
                 Utils.getBox("Tên tài khoản tồn tại!", Alert.AlertType.INFORMATION).show();
                 Logger.getLogger(FDangKyKhachHangController.class.getName()).log(Level.SEVERE, null, ex);      

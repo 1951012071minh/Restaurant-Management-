@@ -334,7 +334,8 @@ public class FDatTiecController implements Initializable {
             if(s.checkDatTiec(d.getMaSanh(), (Date) d.getNgayToChuc(), d.getBuoi()) == 0){
                 if(parseInt(this.txtSoLuongKhach.getText()) > parseInt(this.txtSucChua.getText())){
                     throw new Exception("Số lượng khách không được vượt quá sức chứa!");
-                }if(parseInt(this.txtSoBan.getText()) > (parseInt(this.txtSucChua.getText()) / 10)){
+                }
+                if(parseInt(this.txtSoBan.getText()) > (parseInt(this.txtSucChua.getText()) / 10)){
                     throw new Exception("Số lượng bàn không được vượt quá (sức chứa / 10)!");
                 }
                 HoaDon h = new HoaDon();

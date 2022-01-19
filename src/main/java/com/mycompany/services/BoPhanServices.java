@@ -134,10 +134,8 @@ public class BoPhanServices {
             String sql = "DELETE FROM bophan WHERE (MaBP = ?);";
             
             PreparedStatement stm2 = conn.prepareStatement(sql);
-            PreparedStatement stm3 = conn.prepareStatement("call update_SoLuongNV()");
             stm2.setInt(1, MaBP);
             stm2.execute();
-            stm3.executeUpdate();
         }
     }
 }
